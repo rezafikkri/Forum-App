@@ -1,5 +1,10 @@
-function App() {
-  return <h1>Hello world</h1>;
-}
+import { Route, Routes } from "react-router-dom";
+import RegisterPage from "./pages/RegisterPage";
 
-export default App;
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/register" element={<RegisterPage />} />
+    </Routes>
+  );
+}
