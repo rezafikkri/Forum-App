@@ -1,15 +1,22 @@
 import { Link } from 'react-router-dom';
 import useInput from '../hooks/useInput';
+import PropTypes from 'prop-types';
 
-export default function RegisterInput() {
+function RegisterInput({ onRegister }) {
   const [name, handleNameChange, ] = useInput('');
   const [email, handleEmailChange, ] = useInput('');
   const [password, handlePasswordChange, ] = useInput('');
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    onRegister({ name, email, password });
+  }
+
   return (
     <>
-      <form>
-        <div class="mb-3 mt-4">
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3 mt-4">
           <label htmlFor="name" className="form-label">Name</label>
           <input
             type="text"
@@ -51,3 +58,9 @@ export default function RegisterInput() {
     </>
   );
 }
+
+RegisterInput.propTypes = {
+  onRegister: PropTypes.func.isRequired
+};
+
+export default RegisterInput;
