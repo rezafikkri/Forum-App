@@ -1,3 +1,4 @@
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import api from '../../utils/api';
 
 const ActionType = {
@@ -5,11 +6,15 @@ const ActionType = {
 };
 
 function asyncRegisterUser({ name, email, password }) {
-  return async () => {
+  return async (dispatch) => {
     try {
-      await api.register({ name, email, password });
+      dispatch(showLoading());
+
+      return await api.register({ name, email, password });
     } catch (error) {
-      alert(error.message);
+      return Promise.reject(error.message);
+    } finally {
+      dispatch(hideLoading());
     }
   };
 }

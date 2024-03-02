@@ -16,7 +16,7 @@ function RegisterInput({ onRegister }) {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <div className="mb-3 mt-4">
+        <div className="mb-3">
           <label htmlFor="name" className="form-label">Name</label>
           <input
             type="text"
