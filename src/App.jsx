@@ -1,12 +1,25 @@
 import { Route, Routes } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import RegisterPage from './pages/RegisterPage';
 import SignInPage from './pages/SignInPage';
 import Loading from './components/Loading';
 import HomePage from './pages/HomePage';
+import { useEffect } from 'react';
+import { asyncPreloadProccess } from './states/isPreload/action';
 
 export default function App() {
-  const authUser = useSelector((states) => states.authUser);
+  const {
+    authUser,
+    isPreload,
+  } = useSelector((states) => states);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(asyncPreloadProccess());
+  }, [dispatch]);
+
+  if (isPreload) return <Loading />;
 
   if (authUser === null) {
     return (
