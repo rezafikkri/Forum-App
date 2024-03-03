@@ -1,16 +1,18 @@
-function Alert({ message, onClose }) {
-  const strong = message.match(/[a-z]+/i)[0];
-  const strongIndex = message.indexOf(strong) + strong.length + 2;
-  const strongCapitalize = strong[0].toUpperCase() + strong.slice(1);
+import PropTypes from 'prop-types';
 
-  const objMessage = {
-    strong: strongCapitalize,
-    other: message.slice(strongIndex),
-  };
+function Alert({ message, onClose }) {
+  const replacedMessage = message.replace(/"/g, '');
+
+  // capitalize first letter of the first word of the message
+  const firstWord = replacedMessage.match(/[a-z]+/i)[0];
+  const firstWordCapitalize = firstWord[0].toUpperCase() + firstWord.slice(1);  
+
+  const firstWordIndex = replacedMessage.indexOf(firstWord) + firstWord.length;
+  const newMessage = firstWordCapitalize + replacedMessage.slice(firstWordIndex);
 
   return (
     <div className="alert alert-danger alert-dismissible fade show" role="alert">
-      <strong>{objMessage.strong}</strong> {objMessage.other}
+      {newMessage}
       <button
         type="button"
         className="btn-close"
@@ -21,5 +23,10 @@ function Alert({ message, onClose }) {
     </div>
   );
 }
+
+Alert.propTypes = {
+  message: PropTypes.string.isRequired,
+  onClose: PropTypes.func.isRequired,
+};
 
 export default Alert;

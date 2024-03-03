@@ -1,9 +1,9 @@
-import { Route, Routes } from "react-router-dom";
-import RegisterPage from "./pages/RegisterPage";
-import SignInPage from "./pages/SignInPage";
-import Loading from "./components/Loading";
-import { useSelector } from "react-redux";
-import HomePage from "./pages/HomePage";
+import { Route, Routes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import RegisterPage from './pages/RegisterPage';
+import SignInPage from './pages/SignInPage';
+import Loading from './components/Loading';
+import HomePage from './pages/HomePage';
 
 export default function App() {
   const authUser = useSelector((states) => states.authUser);
