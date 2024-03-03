@@ -1,14 +1,20 @@
 import useInput from '../hooks/useInput';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-export default function SignInInput() {
+function SignInInput({ onSignIn }) {
   const [email, handleEmailChange] = useInput('');
   const [password, handlePasswordChange] = useInput('');
 
+  function handleSubmit(e) {
+    e.preventDefault();
+    onSignIn({ email, password });
+  }
+
   return (
     <>
-      <form>
-        <div class="mb-3 mt-4">
+      <form onSubmit={handleSubmit}>
+        <div className="mb-3">
           <label htmlFor="email" className="form-label">Email</label>
           <input
             type="text"
@@ -38,3 +44,9 @@ export default function SignInInput() {
     </>
   );
 }
+
+SignInInput.propTypes = {
+  onSignIn: PropTypes.func.isRequired,
+};
+
+export default SignInInput;

@@ -14,7 +14,7 @@ function RegisterPage() {
   function handleRegister({ name, email, password }) {
     dispatch(asyncRegisterUser({ name, email, password }))
       .then(() => {
-        navigate('/signin');
+        navigate('/');
       }).catch((errorMessage) => {
         setRegisterError(errorMessage);
       });
