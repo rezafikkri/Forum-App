@@ -25,17 +25,15 @@ function RegisterPage() {
   }
 
   return (
-    <>
-      <div className="container-fluid py-5">
-        <div className="row justify-content-center">
-          <div className="col-6 col-lg-3">
-            <h1 className="mb-4">Register</h1>
-            {registerError && <Alert message={registerError} onClose={resetRegisterErrorState} />}
-            <RegisterInput onRegister={handleRegister} />
-          </div>
+    <main className="py-5">
+      <div className="row justify-content-center">
+        <div className="col-6 col-lg-3">
+          <h1 className="mb-4">Register</h1>
+          {registerError && <Alert message={registerError} onClose={resetRegisterErrorState} />}
+          <RegisterInput onRegister={handleRegister} />
         </div>
       </div>
-    </>
+    </main>
   );
 }
 

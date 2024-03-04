@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import RegisterPage from './pages/RegisterPage';
 import SignInPage from './pages/SignInPage';
@@ -6,12 +6,12 @@ import Loading from './components/Loading';
 import HomePage from './pages/HomePage';
 import { useEffect } from 'react';
 import { asyncPreloadProccess } from './states/isPreload/action';
+import Layout from './Layout';
+import { asyncUnsetAuthUser } from './states/authUser/action';
 
 export default function App() {
-  const {
-    authUser,
-    isPreload,
-  } = useSelector((states) => states);
+  const authUser = useSelector((states) => states.authUser);
+  const isPreload = useSelector((states) => states.isPreload);
 
   const dispatch = useDispatch();
 
@@ -19,30 +19,30 @@ export default function App() {
     dispatch(asyncPreloadProccess());
   }, [dispatch]);
 
-  if (isPreload) return <Loading />;
+  function handleSignOut(e) {
+    e.preventDefault();
 
-  if (authUser === null) {
-    return (
-      <>
-        <Loading />
-        <main>
-          <Routes>
-            <Route path="/*" element={<SignInPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-          </Routes>
-        </main>
-      </>
-    );
+    dispatch(asyncUnsetAuthUser());
   }
+
+  if (isPreload) return <Loading />;
 
   return (
     <>
       <Loading />
-      <main>
+      <div className="container-fluid">
         <Routes>
-          <Route path="/*" element={<HomePage />} />
+          {(authUser === null) && (
+            <>
+              <Route path="/signin" element={<SignInPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+            </>
+          )}
+          <Route path="/*" element={<Layout onSignOut={handleSignOut} />}>
+            <Route index="true" element={<HomePage />} />
+          </Route>
         </Routes>
-      </main>
+      </div>
     </>
   );
 }

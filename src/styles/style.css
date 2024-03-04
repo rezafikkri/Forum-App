@@ -14,3 +14,19 @@ form .form-label {
 h1 {
   font-weight: 700;
 }
+
+.nav-link.profile img {
+  border-radius: 50%;
+}
+
+.navbar-nav .nav-link.active {
+  color: var(--bs-primary);
+}
+
+.navbar-nav .nav-link:hover {
+  color: var(--bs-primary);
+}
+
+.navbar-nav .nav-link.profile + .dropdown-menu a {
+  color: var(--bs-danger);
+}
