@@ -15,6 +15,13 @@ function Layout({ onSignOut }) {
           </div>
         </div>
       </main>
+      <footer className="text-end py-4">
+        <div className="row justify-content-center">
+          <div className="col-12 col-md-10">
+            by Reza Sariful Fikri
+          </div>
+        </div>
+      </footer>
     </>
   );
 }

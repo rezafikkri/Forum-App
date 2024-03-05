@@ -100,3 +100,9 @@ h1 {
 .thread-footer i {
   margin-right: .25rem;
 }
+
+footer {
+  margin-top: 9rem;
+  font-size: .75rem;
+  color: #4b4b4b;
+}
