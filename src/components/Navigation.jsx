@@ -7,7 +7,7 @@ function Navigation({ onSignOut }) {
 
   return (
     <div className="row justify-content-center">
-      <div className="col-10">
+      <div className="col-12 col-md-10">
         <nav className="navbar navbar-expand-sm">
           <a className="navbar-brand" href="#">
             <img src="/logo.svg" alt="Forum App" width="30"/>

@@ -10,7 +10,7 @@ function Layout({ onSignOut }) {
       </header>
       <main>
         <div className="row justify-content-center">
-          <div className="col-8">
+          <div className="col-10 col-md-8">
             <Outlet />
           </div>
         </div>
