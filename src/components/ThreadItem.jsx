@@ -14,7 +14,7 @@ function ThreadItem({
   downVotesBy,
   totalComments,
 }) {
-  const authUserId = useSelector((states) => states.authUser.id);
+  const authUser = useSelector((states) => states.authUser);
 
   const stripedBody = stripHtml(body);
   const bodyCountChr = stripedBody.length;
@@ -23,7 +23,8 @@ function ThreadItem({
   dayjs.extend(relativeTime);
 
   function isSignedInUserVoted(votesBy) {
-    return votesBy.includes(authUserId);
+    if (authUser !== null) return votesBy.includes(authUser.id);
+    return false;
   }
 
   return (

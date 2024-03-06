@@ -9,6 +9,7 @@ function HomePage() {
   const users = useSelector((states) => states.users);
   const threads = useSelector((states) => states.threads);
   const categories = useSelector((states) => states.categories);
+  const authUser = useSelector((states) => states.authUser);
 
   useEffect(() => {
     dispatch(asyncPopulateUsersThreadsAndCategories());
@@ -24,15 +25,20 @@ function HomePage() {
       <header className="forum-header">
         <div className="d-flex align-items-start">
           <h1 className="fs-2 fw-bold text-body-emphasis me-auto mb-0">Threads</h1>
-          <Link to="/create" className="btn btn-primary ms-auto">Create Thread</Link>
+          {authUser !== null && (
+            <Link to="/create" className="btn btn-primary ms-auto">Create Thread</Link>
+          )}
         </div>
-        <div className="d-flex mt-3 align-items-center">
+        <div className="d-flex mt-3 align-items-start">
           <p className="me-auto mb-0">{threads.length} threads</p>
-          <select name="categories" className="form-select ms-auto">
-            {categories.values.map((category) => {
-              return (<option key={category} value={category}>{category}</option>);
-            })}
-          </select>
+          <div className="threads-filter ms-auto input-group">
+            <span class="input-group-text">Category</span>
+            <select name="categories" className="form-select">
+              {categories.values.map((category) => {
+                return (<option key={category} value={category}>{category}</option>);
+              })}
+            </select>
+          </div>
         </div>
       </header>
       <ThreadsList threads={threadsList} />
