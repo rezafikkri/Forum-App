@@ -2,16 +2,13 @@ import { ActionType } from "./action";
 
 const initialValue = {
   values: ['all'],
-  categorySelected: 'all',
+  selected: 'all',
 };
 
 function categoriesReducer(categories = initialValue, action = {}) {
   switch (action.type) {
     case ActionType.RECEIVE_CATEGORIES:
-      return {
-        ...categories,
-        values: [ ...categories.values, ...action.payload.categories.values ]
-      };
+      return action.payload.categories;
 
     default:
       return categories;

@@ -111,7 +111,8 @@ const api = (() => {
 
   function getAllCategories(threads) {
     return {
-      values: [ ...new Set(threads.map((thread) => thread.category)) ],
+      values: [ 'all', ...new Set(threads.map((thread) => thread.category)) ],
+      selected: 'all',
     };
   }
 

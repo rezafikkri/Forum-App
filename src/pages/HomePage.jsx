@@ -14,6 +14,11 @@ function HomePage() {
     dispatch(asyncPopulateUsersThreadsAndCategories());
   }, [dispatch]);
 
+  const threadsList = threads.map((thread) => ({
+    ...thread,
+    user: users.find((user) => user.id === thread.ownerId),
+  }));
+
   return (
     <>
       <header className="forum-header">
@@ -24,12 +29,13 @@ function HomePage() {
         <div className="d-flex mt-3 align-items-center">
           <p className="me-auto mb-0">{threads.length} threads</p>
           <select name="categories" className="form-select ms-auto">
-            <option>All Categories</option>
-            <option>other</option>
+            {categories.values.map((category) => {
+              return (<option key={category} value={category}>{category}</option>);
+            })}
           </select>
         </div>
       </header>
-      <ThreadsList />
+      <ThreadsList threads={threadsList} />
     </>
   );
 }
