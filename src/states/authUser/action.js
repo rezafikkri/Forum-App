@@ -31,7 +31,6 @@ function asyncSetAuthUser({ email, password }) {
       const authUser = await api.getOwnProfile();
 
       dispatch(setAuthUserActionCreator(authUser));
-      return authUser;
     } catch (error) {
       return Promise.reject(error.message);
     } finally {

@@ -5,6 +5,15 @@ const ActionType = {
   RECEIVE_USER: 'RECEIVE_USER',
 };
 
+function receiveUsersActionCreator(users) {
+  return {
+    type: ActionType.RECEIVE_USER,
+    payload: {
+      users,
+    },
+  };
+}
+
 function asyncRegisterUser({ name, email, password }) {
   return async (dispatch) => {
     try {
@@ -19,4 +28,4 @@ function asyncRegisterUser({ name, email, password }) {
   };
 }
 
-export { ActionType, asyncRegisterUser };
+export { ActionType, asyncRegisterUser, receiveUsersActionCreator };

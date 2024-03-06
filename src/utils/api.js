@@ -1,7 +1,7 @@
 const api = (() => {
   const BASE_URL = 'https://forum-api.dicoding.dev/v1';
 
-  async function _fetchWithAuth(url, options = {}) {
+  async function fetchWithAuth(url, options = {}) {
     return fetch(url, {
       ...options,
       headers: {
@@ -67,7 +67,7 @@ const api = (() => {
   }
 
   async function getOwnProfile() {
-    const response = await _fetchWithAuth(`${BASE_URL}/users/me`);
+    const response = await fetchWithAuth(`${BASE_URL}/users/me`);
     const responseJson = await response.json();
 
     const { status, message } = responseJson;
@@ -80,12 +80,50 @@ const api = (() => {
     return user;
   }
 
+  async function getAllUsers() {
+    const response = await fetch(`${BASE_URL}/users`);
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const { data: { users } } = responseJson;
+    return users;
+  }
+
+  async function getAllThreads() {
+    const response = await fetch(`${BASE_URL}/threads`);
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const { data: { threads } } = responseJson;
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+    return threads;
+  }
+
+  function getAllCategories(threads) {
+    return {
+      values: [ ...new Set(threads.map((thread) => thread.category)) ],
+    };
+  }
+
   return {
     putAccessToken,
     getAccessToken,
     register,
     signIn,
     getOwnProfile,
+    getAllUsers,
+    getAllThreads,
+    getAllCategories,
   };
 })();
 

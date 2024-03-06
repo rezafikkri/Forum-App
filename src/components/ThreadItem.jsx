@@ -21,21 +21,21 @@ function ThreadItem() {
             <span>Technology</span>
           </div>
           <div className="me-4">
-            <i class="bi bi-clock"></i>
+            <i className="bi bi-clock"></i>
             <time>10 minutes ago</time>
           </div>
 
           <a href="#" className="active">
-            <i class="bi bi-arrow-up-circle-fill"></i>
+            <i className="bi bi-arrow-up-circle-fill"></i>
             <span>10</span>
           </a>
           <a href="#">
-            <i class="bi bi-arrow-down-circle"></i>
+            <i className="bi bi-arrow-down-circle"></i>
             <span>0</span>
           </a>
 
           <div>
-            <i class="bi bi-chat"></i>
+            <i className="bi bi-chat"></i>
             <span>20</span>
           </div>
         </div>
