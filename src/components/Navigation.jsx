@@ -1,9 +1,16 @@
 import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 function Navigation({ onSignOut }) {
   const authUser = useSelector((states) => states.authUser);
+  const location = useLocation();
+
+  function isNavLinkActive(path) {
+    const browserPath = location.pathname;
+
+    if (path === browserPath) return 'active';
+  }
 
   return (
     <div className="row justify-content-center">
@@ -18,10 +25,10 @@ function Navigation({ onSignOut }) {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-sm-0">
               <li className="nav-item">
-                <a className="nav-link active" aria-current="page" href="#">Threads</a>
+                <Link className={`nav-link ${isNavLinkActive('/')}`} to="/">Threads</Link>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="#">Leaderboards</a>
+                <Link className="nav-link" to="/leaderboards">Leaderboards</Link>
               </li>
             </ul>
             <ul className="navbar-nav ms-auto mb-2 mb-sm-0">
