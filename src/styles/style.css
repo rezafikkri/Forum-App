@@ -1,5 +1,6 @@
 body {
-  font-family: "Roboto", sans-serif;
+  --fa-font: "Roboto", sans-serif;
+  font-family: var(--fa-font);
   background-color: #f3f3f3;
 }
 
@@ -31,7 +32,8 @@ h1 {
   color: var(--bs-danger);
 }
 
-.forum-header {
+.forum-header,
+.mt-80px {
   margin-top: 80px;
 }
 

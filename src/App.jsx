@@ -4,6 +4,7 @@ import RegisterPage from './pages/RegisterPage';
 import SignInPage from './pages/SignInPage';
 import Loading from './components/Loading';
 import HomePage from './pages/HomePage';
+import CreateThreadPage from './pages/CreateThreadPage';
 import { useEffect } from 'react';
 import { asyncPreloadProccess } from './states/isPreload/action';
 import Layout from './Layout';
@@ -40,6 +41,7 @@ export default function App() {
           )}
           <Route path="/*" element={<Layout onSignOut={handleSignOut} />}>
             <Route index="true" element={<HomePage />} />
+            <Route path="create" element={<CreateThreadPage />} />
           </Route>
         </Routes>
       </div>

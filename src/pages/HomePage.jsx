@@ -32,7 +32,7 @@ function HomePage() {
         <div className="d-flex mt-3 align-items-start">
           <p className="me-auto mb-0">{threads.length} threads</p>
           <div className="threads-filter ms-auto input-group">
-            <span class="input-group-text">Category</span>
+            <span className="input-group-text">Category</span>
             <select name="categories" className="form-select">
               {categories.values.map((category) => {
                 return (<option key={category} value={category}>{category}</option>);
