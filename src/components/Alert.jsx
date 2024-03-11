@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 
-function Alert({ message, onClose }) {
+function Alert({ message, onClose, type = 'danger' }) {
   const replacedMessage = message.replace(/"/g, '');
 
   // capitalize first letter of the first word of the message
@@ -11,7 +11,7 @@ function Alert({ message, onClose }) {
   const newMessage = firstWordCapitalize + replacedMessage.slice(firstWordIndex);
 
   return (
-    <div className="alert alert-danger alert-dismissible fade show" role="alert">
+    <div className={`alert alert-${type} alert-dismissible fade show`} role="alert">
       {newMessage}
       <button
         type="button"

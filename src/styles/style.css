@@ -108,3 +108,7 @@ footer {
   font-size: .75rem;
   color: #4b4b4b;
 }
+
+.fixed-alert {
+  min-width: 50%;
+}

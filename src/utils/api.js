@@ -141,6 +141,62 @@ const api = (() => {
     return thread;
   }
 
+  async function upVoteThread(id) {
+    const response = await fetchWithAuth(`${BASE_URL}/threads/${id}/up-vote`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const { data: { vote } } = responseJson;
+    return vote;
+  }
+
+  async function downVoteThread(id) {
+    const response = await fetchWithAuth(`${BASE_URL}/threads/${id}/down-vote`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const { data: { vote } } = responseJson;
+    return vote;
+  }
+
+  async function neutralVoteThread(id) {
+    const response = await fetchWithAuth(`${BASE_URL}/threads/${id}/neutral-vote`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const { data: { vote } } = responseJson;
+    return vote;
+  }
+
   return {
     putAccessToken,
     getAccessToken,
@@ -151,6 +207,9 @@ const api = (() => {
     getAllThreads,
     getAllCategories,
     createThread,
+    upVoteThread,
+    downVoteThread,
+    neutralVoteThread,
   };
 })();
 

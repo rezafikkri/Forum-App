@@ -13,6 +13,7 @@ function ThreadItem({
   upVotesBy,
   downVotesBy,
   totalComments,
+  onUpVote,
 }) {
   const authUser = useSelector((states) => states.authUser);
 
@@ -25,6 +26,13 @@ function ThreadItem({
   function isSignedInUserVoted(votesBy) {
     if (authUser !== null) return votesBy.includes(authUser.id);
     return false;
+  }
+
+  function handleUpvote(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    onUpVote({ threadId: id, upVotesBy });
   }
 
   return (
@@ -53,7 +61,7 @@ function ThreadItem({
             <time>{dayjs().to(dayjs(createdAt))}</time>
           </div>
 
-          <a href="#" className={isSignedInUserVoted(upVotesBy) ? 'active' : ''}>
+          <a href="#" onClick={handleUpvote} className={isSignedInUserVoted(upVotesBy) ? 'active' : ''}>
             <i className={`bi bi-arrow-up-circle${isSignedInUserVoted(upVotesBy) ? '-fill' : ''}`}></i>
             <span>{upVotesBy.length}</span>
           </a>
