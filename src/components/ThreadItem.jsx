@@ -2,6 +2,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { stripHtml } from '../utils';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
 
 function ThreadItem({
   id,
@@ -14,6 +15,7 @@ function ThreadItem({
   downVotesBy,
   totalComments,
   onUpVote,
+  onDownVote,
 }) {
   const authUser = useSelector((states) => states.authUser);
 
@@ -28,11 +30,18 @@ function ThreadItem({
     return false;
   }
 
-  function handleUpvote(e) {
+  function handleUpVote(e) {
     e.stopPropagation();
     e.preventDefault();
 
-    onUpVote({ threadId: id, upVotesBy });
+    onUpVote({ threadId: id, upVotesBy, downVotesBy });
+  }
+
+  function handleDownVote(e) {
+    e.stopPropagation();
+    e.preventDefault();
+
+    onDownVote({ threadId: id, downVotesBy, upVotesBy });
   }
 
   return (
@@ -61,11 +70,11 @@ function ThreadItem({
             <time>{dayjs().to(dayjs(createdAt))}</time>
           </div>
 
-          <a href="#" onClick={handleUpvote} className={isSignedInUserVoted(upVotesBy) ? 'active' : ''}>
+          <a href="#" onClick={handleUpVote} className={isSignedInUserVoted(upVotesBy) ? 'active' : ''}>
             <i className={`bi bi-arrow-up-circle${isSignedInUserVoted(upVotesBy) ? '-fill' : ''}`}></i>
             <span>{upVotesBy.length}</span>
           </a>
-          <a href="#" className={isSignedInUserVoted(downVotesBy) ? 'active' : ''}>
+          <a href="#" onClick={handleDownVote} className={isSignedInUserVoted(downVotesBy) ? 'active' : ''}>
             <i className={`bi bi-arrow-down-circle${isSignedInUserVoted(downVotesBy) ? '-fill' : ''}`}></i>
             <span>{downVotesBy.length}</span>
           </a>
@@ -79,5 +88,19 @@ function ThreadItem({
     </>
   );
 }
+
+ThreadItem.propTypes = {
+  id: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  body: PropTypes.string.isRequired,
+  category: PropTypes.string.isRequired,
+  createdAt: PropTypes.string.isRequired,
+  user: PropTypes.objectOf(PropTypes.string).isRequired,
+  upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+  downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+  totalComments: PropTypes.number.isRequired,
+  onUpVote: PropTypes.func.isRequired,
+  onDownVote: PropTypes.func.isRequired,
+};
 
 export default ThreadItem;

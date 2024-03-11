@@ -4,7 +4,7 @@ import Alert from '../components/Alert';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncPopulateUsersThreadsAndCategories } from '../states/shared/action';
-import { asyncNeutralVoteThread, asyncUpVoteThread } from '../states/threads/action';
+import { asyncDownVoteThread, asyncNeutralVoteThread, asyncUpVoteThread } from '../states/threads/action';
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ function HomePage() {
     setVoteThreadError(null);
   }
 
-  function handleUpVoteThread({ threadId, upVotesBy }) {
+  function handleUpVoteThread({ threadId, upVotesBy, downVotesBy }) {
     // if user is not sign in yet
     if (authUser === null) {
       setVoteThreadError('You must be signed in to upvote!');
@@ -27,9 +27,32 @@ function HomePage() {
     
     // check, if signed in user not upvote yet
     if (!upVotesBy.includes(authUser.id)) {
-      dispatch(asyncUpVoteThread(threadId));
+      // check, if signed in user has downvoted
+      let isDownVoted = false;
+      if (downVotesBy.includes(authUser.id)) isDownVoted = true;
+
+      dispatch(asyncUpVoteThread({ threadId, isDownVoted }));
     } else {
       dispatch(asyncNeutralVoteThread({ threadId, target: 'up-vote' }));
+    }
+  }
+
+  function handleDownVoteThread({ threadId, downVotesBy, upVotesBy }) {
+    // if user is not sign in yet
+    if (authUser === null) {
+      setVoteThreadError('You must be signed in to downvote!');
+      return false;
+    }
+    
+    // check, if signed in user not downvote yet
+    if (!downVotesBy.includes(authUser.id)) {
+      // check, if signed in user has upvoted
+      let isUpVoted = false;
+      if (upVotesBy.includes(authUser.id)) isUpVoted = true;
+
+      dispatch(asyncDownVoteThread({ threadId, isUpVoted }));
+    } else {
+      dispatch(asyncNeutralVoteThread({ threadId, target: 'down-vote' }));
     }
   }
 
@@ -63,7 +86,11 @@ function HomePage() {
           </div>
         </div>
       </header>
-      <ThreadsList threads={threadsList} onUpVote={handleUpVoteThread} />
+      <ThreadsList
+        threads={threadsList}
+        onUpVote={handleUpVoteThread}
+        onDownVote={handleDownVoteThread}
+      />
       {voteThreadError && (
         <div className="position-fixed bottom-0 end-0 p-5 pb-0 fixed-alert">
           <Alert message={voteThreadError} onClose={resetVoteThreadErrorState} type="info" />
