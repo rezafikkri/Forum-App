@@ -10,6 +10,12 @@ function categoriesReducer(categories = initialValue, action = {}) {
     case ActionType.RECEIVE_CATEGORIES:
       return action.payload.categories;
 
+    case ActionType.SET_CATEGORY:
+      return {
+        ...categories,
+        selected: action.payload.category,
+      };
+
     default:
       return categories;
   }

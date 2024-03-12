@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncPopulateUsersThreadsAndCategories } from '../states/shared/action';
 import { asyncDownVoteThread, asyncNeutralVoteThread, asyncUpVoteThread } from '../states/threads/action';
+import { setCategoryActionCreator } from '../states/categories/action';
+import ThreadsFilter from '../components/threadsFilter';
 
 function HomePage() {
   const dispatch = useDispatch();
@@ -56,14 +58,23 @@ function HomePage() {
     }
   }
 
+  function handleCategoryChange(e) {
+    dispatch(setCategoryActionCreator(e.target.value));
+  }
+
   useEffect(() => {
     dispatch(asyncPopulateUsersThreadsAndCategories());
   }, [dispatch]);
 
-  const threadsList = threads.map((thread) => ({
+  let threadsList = threads.map((thread) => ({
     ...thread,
     user: users.find((user) => user.id === thread.ownerId),
   }));
+
+  // if category selected != all
+  if (categories.selected !== 'all') {
+    threadsList = threadsList.filter((thread) => thread.category === categories.selected);
+  }
 
   return (
     <>
@@ -75,15 +86,11 @@ function HomePage() {
           )}
         </div>
         <div className="d-flex mt-3 align-items-start">
-          <p className="me-auto mb-0">{threads.length} threads</p>
-          <div className="threads-filter ms-auto input-group">
-            <span className="input-group-text">Category</span>
-            <select name="categories" className="form-select">
-              {categories.values.map((category) => {
-                return (<option key={category} value={category}>{category}</option>);
-              })}
-            </select>
-          </div>
+          <ThreadsFilter
+            threadsLength={threads.length}
+            categories={categories}
+            onCategoryChange={handleCategoryChange}
+          />
         </div>
       </header>
       <ThreadsList
