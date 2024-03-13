@@ -53,54 +53,83 @@ h1 {
   }
 }
 
-.threads-list {
+.threads-list,
+.thread-card {
   margin-top: 38px;
 }
 
-.thread-item {
+.threads-list .thread-item,
+.thread-card {
   background-color: white;
   border: 1px solid var(--bs-border-color);
   padding: 20px;
 }
 
-.thread-item:first-child {
+.threads-list .thread-item:first-child {
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
 }
 
-.thread-item:last-child {
+.threads-list .thread-item:last-child {
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;
 }
 
-.thread-author img {
+.threads-list .thread-body:hover {
+  cursor: pointer;
+}
+
+.threads-list .thread-author img,
+.thread-card .thread-author img {
   border-radius: 50%;
 }
 
-.thread-author span {
-  font-size: .75rem;
+.threads-list .thread-author span,
+.thread-card .thread-author span {
   color: #7a7a7a;
 }
 
-.thread-item p {
+.threads-list .thread-author span {
+  font-size: .75rem;
+}
+
+.threads-list .thread-item p {
   color: #4b4b4b;
 }
 
-.thread-footer {
+.threads-list .thread-footer {
   font-size: .875rem;
 }
 
-.thread-footer,
-.thread-footer a:not(.active) {
+.threads-list .thread-footer,
+.threads-list .thread-footer a:not(.active),
+.thread-card .thread-body time,
+.thread-card .thread-footer,
+.thread-card .thread-footer a:not(.active) {
   color: #6c757d;
 }
 
-.thread-footer a:hover {
+.threads-list .thread-footer a:hover,
+.thread-card .thread-footer a:hover {
   color: var(--bs-primary);
 }
 
-.thread-footer i {
+.threads-list .thread-footer i,
+.thread-card .thread-footer i {
   margin-right: .25rem;
+}
+
+.thread-card {
+  border-radius: 6px;
+}
+
+.thread-card .thread-author span,
+.thread-card .thread-body time {
+  font-size: .875rem;
+}
+
+.thread-card .thread-body h2 {
+  margin-bottom: -4px;
 }
 
 footer {

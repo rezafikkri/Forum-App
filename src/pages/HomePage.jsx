@@ -80,7 +80,7 @@ function HomePage() {
     <>
       <header className="forum-header">
         <div className="d-flex align-items-start">
-          <h1 className="fs-2 fw-bold text-body-emphasis me-auto mb-0">Threads</h1>
+          <h1 className="fs-2 fw-medium text-body-emphasis me-auto mb-0">Threads</h1>
           {authUser !== null && (
             <Link to="/create" className="btn btn-primary ms-auto">Create Thread</Link>
           )}
