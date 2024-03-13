@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { asyncPopulateUsersThreadsAndCategories } from '../states/shared/action';
 import { asyncDownVoteThread, asyncNeutralVoteThread, asyncUpVoteThread } from '../states/threads/action';
 import { setCategoryActionCreator } from '../states/categories/action';
-import ThreadsFilter from '../components/threadsFilter';
+import ThreadsFilter from '../components/ThreadsFilter';
 
 function HomePage() {
   const dispatch = useDispatch();
