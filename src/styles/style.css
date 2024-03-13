@@ -128,8 +128,8 @@ h1 {
   font-size: .875rem;
 }
 
-.thread-card .thread-body h2 {
-  margin-bottom: -4px;
+.thread-card .thread-body div:not(.thread-author) img {
+  width: 100%;
 }
 
 footer {

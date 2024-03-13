@@ -45,3 +45,7 @@
   overflow: auto;
   resize: vertical;
 }
+
+.ql-snow .ql-editor a {
+  text-decoration: none;
+}

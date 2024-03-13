@@ -5,6 +5,7 @@ import authUserReducer from './authUser/reducer';
 import { isPreloadReducer } from './isPreload/reducer';
 import threadsReducer from './threads/reducer';
 import categoriesReducer from './categories/reducer';
+import detailThreadReducer from './detailThread/reducer';
 
 const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ const store = configureStore({
     threads: threadsReducer,
     categories: categoriesReducer,
     loadingBar: loadingBarReducer,
+    detailThread: detailThreadReducer,
   },
 });
 

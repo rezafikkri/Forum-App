@@ -12,6 +12,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.1",
     "dayjs": "^1.11.10",
+    "dompurify": "^3.0.9",
     "prop-types": "^15.8.1",
     "quill": "^2.0.0-rc.2",
     "react": "^18.2.0",

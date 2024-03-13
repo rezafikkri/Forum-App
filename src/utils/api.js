@@ -197,6 +197,22 @@ const api = (() => {
     return vote;
   }
 
+  async function getDetailThread(id) {
+    const response = await fetch(`${BASE_URL}/threads/${id}`);
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const { data: { detailThread } } = responseJson;
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+    return detailThread;
+  }
+
   return {
     putAccessToken,
     getAccessToken,
@@ -210,6 +226,7 @@ const api = (() => {
     upVoteThread,
     downVoteThread,
     neutralVoteThread,
+    getDetailThread,
   };
 })();
 
