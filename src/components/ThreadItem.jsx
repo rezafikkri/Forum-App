@@ -3,7 +3,7 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { stripHtml } from '../utils';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function ThreadItem({
   id,
@@ -46,14 +46,11 @@ function ThreadItem({
     onDownVote({ threadId: id, downVotesBy, upVotesBy });
   }
 
-  function handleBodyOnClick() {
-    navigate(`/threads/${id}`);
-  }
-
   return (
     <>
       <article className="thread-item mb-1">
-        <div className="thread-body mb-3" onClick={handleBodyOnClick}>
+        <Link to={`/threads/${id}`}>
+        <div className="thread-body mb-3">
           <div className="thread-author mb-1">
             <img
               src={user.avatar}
@@ -63,9 +60,10 @@ function ThreadItem({
             />
             <span>{user.name}</span>
           </div>
-          <h2 className="fs-5 mb-0">{title}</h2>
+          <h2 className="fs-5 mb-0 text-body">{title}</h2>
           <p className="mb-0">{stripedBody.substring(0, 80) + dots}</p>
         </div>
+        </Link>
         <div className="thread-footer d-flex fw-light gap-3">
           <div>
             <i className="bi bi-hash me-0"></i>

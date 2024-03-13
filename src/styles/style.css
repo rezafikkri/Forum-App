@@ -146,4 +146,5 @@ footer {
 .loading-bar {
   background-color: var(--bs-primary);
   height: 3px;
+  position: absolute;
 }
