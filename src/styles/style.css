@@ -141,3 +141,9 @@ footer {
 .fixed-alert {
   min-width: 50%;
 }
+
+/* Loading bar */
+.loading-bar {
+  background-color: var(--bs-primary);
+  height: 3px;
+}
