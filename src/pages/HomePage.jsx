@@ -68,7 +68,7 @@ function HomePage() {
 
   let threadsList = threads.map((thread) => ({
     ...thread,
-    user: users.find((user) => user.id === thread.ownerId),
+    owner: users.find((user) => user.id === thread.ownerId),
   }));
 
   // if category selected != all

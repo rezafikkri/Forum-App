@@ -44,7 +44,7 @@ function Navigation({ onSignOut }) {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <img src={authUser.avatar} width="30"/>
+                      <img src={authUser.avatar} width="30" alt={authUser.name}/>
                     </a>
                     <ul className="dropdown-menu dropdown-menu-end mt-2">
                       <li><a onClick={onSignOut} className="dropdown-item" href="#">Logout</a></li> 

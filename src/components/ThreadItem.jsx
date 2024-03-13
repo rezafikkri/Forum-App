@@ -11,7 +11,7 @@ function ThreadItem({
   body,
   category,
   createdAt,
-  user,
+  owner,
   upVotesBy,
   downVotesBy,
   totalComments,
@@ -53,12 +53,12 @@ function ThreadItem({
         <div className="thread-body mb-3">
           <div className="thread-author mb-1">
             <img
-              src={user.avatar}
-              alt=""
+              src={owner.avatar}
+              alt={owner.name}
               width={15}
               className="me-1"
             />
-            <span>{user.name}</span>
+            <span>{owner.name}</span>
           </div>
           <h2 className="fs-5 mb-0 text-body">{title}</h2>
           <p className="mb-0">{stripedBody.substring(0, 80) + dots}</p>
@@ -99,7 +99,7 @@ ThreadItem.propTypes = {
   body: PropTypes.string.isRequired,
   category: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  user: PropTypes.objectOf(PropTypes.string).isRequired,
+  owner: PropTypes.objectOf(PropTypes.string).isRequired,
   upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
   downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
   totalComments: PropTypes.number.isRequired,
