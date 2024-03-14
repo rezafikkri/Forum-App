@@ -3,6 +3,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import SanitizeHTML from './SanitizeHTML';
 import { useSelector } from 'react-redux';
+import { isSignedInUserVoted } from '../utils';
 
 function CommentItem({
   id,
@@ -15,11 +16,6 @@ function CommentItem({
   const authUser = useSelector((states) => states.authUser);
 
   dayjs.extend(relativeTime);
-
-  function isSignedInUserVoted(votesBy) {
-    if (authUser !== null) return votesBy.includes(authUser.id);
-    return false;
-  }
 
   return (
     <article className="comment-item mb-1">
@@ -39,12 +35,18 @@ function CommentItem({
         <SanitizeHTML html={content} className="mt-2" />
       </div>
       <div className="comment-footer d-flex fw-light gap-3 row-gap-1 flex-wrap">
-        <a href="#" className={isSignedInUserVoted(upVotesBy) ? 'active' : ''}>
-          <i className={`bi bi-arrow-up-circle${isSignedInUserVoted(upVotesBy) ? '-fill' : ''}`}></i>
+        <a
+          href="#"
+          className={isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? 'active' : ''}
+        >
+          <i className={`bi bi-arrow-up-circle${isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? '-fill' : ''}`}></i>
           <span>{upVotesBy.length}</span>
         </a>
-        <a href="#" className={isSignedInUserVoted(downVotesBy) ? 'active' : ''}>
-          <i className={`bi bi-arrow-down-circle${isSignedInUserVoted(downVotesBy) ? '-fill' : ''}`}></i>
+        <a
+          href="#"
+          className={isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? 'active' : ''}
+        >
+          <i className={`bi bi-arrow-down-circle${isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? '-fill' : ''}`}></i>
           <span>{downVotesBy.length}</span>
         </a>
       </div>

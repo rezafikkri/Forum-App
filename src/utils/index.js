@@ -4,4 +4,12 @@ function stripHtml(htmlString) {
    return tmp.textContent || tmp.innerText || "";
 }
 
-export { stripHtml };
+function isSignedInUserVoted({ authUser, votesBy }) {
+  if (authUser !== null) return votesBy.includes(authUser.id);
+  return false;
+}
+
+export {
+  stripHtml,
+  isSignedInUserVoted,
+};

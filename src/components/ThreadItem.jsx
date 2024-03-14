@@ -3,7 +3,8 @@ import relativeTime from 'dayjs/plugin/relativeTime';
 import { stripHtml } from '../utils';
 import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { isSignedInUserVoted } from '../utils';
 
 function ThreadItem({
   id,
@@ -19,18 +20,12 @@ function ThreadItem({
   onDownVote,
 }) {
   const authUser = useSelector((states) => states.authUser);
-  const navigate = useNavigate();
 
   const stripedBody = stripHtml(body);
   const bodyCountChr = stripedBody.length;
   const dots = bodyCountChr <= 80 ? "" : "...";
 
   dayjs.extend(relativeTime);
-
-  function isSignedInUserVoted(votesBy) {
-    if (authUser !== null) return votesBy.includes(authUser.id);
-    return false;
-  }
 
   function handleUpVote(e) {
     e.stopPropagation();
@@ -74,12 +69,20 @@ function ThreadItem({
             <time>{dayjs().to(dayjs(createdAt))}</time>
           </div>
 
-          <a href="#" onClick={handleUpVote} className={isSignedInUserVoted(upVotesBy) ? 'active' : ''}>
-            <i className={`bi bi-arrow-up-circle${isSignedInUserVoted(upVotesBy) ? '-fill' : ''}`}></i>
+          <a
+            href="#"
+            onClick={handleUpVote}
+            className={isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? 'active' : ''}
+          >
+            <i className={`bi bi-arrow-up-circle${isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? '-fill' : ''}`}></i>
             <span>{upVotesBy.length}</span>
           </a>
-          <a href="#" onClick={handleDownVote} className={isSignedInUserVoted(downVotesBy) ? 'active' : ''}>
-            <i className={`bi bi-arrow-down-circle${isSignedInUserVoted(downVotesBy) ? '-fill' : ''}`}></i>
+          <a
+            href="#"
+            onClick={handleDownVote}
+            className={isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? 'active' : ''}
+          >
+            <i className={`bi bi-arrow-down-circle${isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? '-fill' : ''}`}></i>
             <span>{downVotesBy.length}</span>
           </a>
 

@@ -3,6 +3,7 @@ import SanitizeHTML from './SanitizeHTML';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useSelector } from 'react-redux';
+import { isSignedInUserVoted } from '../utils';
 
 function ThreadCard({
   id,
@@ -19,11 +20,6 @@ function ThreadCard({
   const authUser = useSelector((states) => states.authUser);
 
   dayjs.extend(relativeTime);
-
-  function isSignedInUserVoted(votesBy) {
-    if (authUser !== null) return votesBy.includes(authUser.id);
-    return false;
-  }
 
   function handleUpVote(e) {
     e.preventDefault();
@@ -54,19 +50,27 @@ function ThreadCard({
         <SanitizeHTML html={body} className="mt-2 fs-5" />
       </div>
       <div className="thread-footer d-flex fw-light gap-3 row-gap-1 flex-wrap">
-          <div className="me-4">
-            <i className="bi bi-hash me-0"></i>
-            <span>{category}</span>
-          </div>
+        <div className="me-4">
+          <i className="bi bi-hash me-0"></i>
+          <span>{category}</span>
+        </div>
 
-          <a href="#" onClick={handleUpVote} className={isSignedInUserVoted(upVotesBy) ? 'active' : ''}>
-            <i className={`bi bi-arrow-up-circle${isSignedInUserVoted(upVotesBy) ? '-fill' : ''}`}></i>
-            <span>{upVotesBy.length}</span>
-          </a>
-          <a href="#" onClick={handleDownVote} className={isSignedInUserVoted(downVotesBy) ? 'active' : ''}>
-            <i className={`bi bi-arrow-down-circle${isSignedInUserVoted(downVotesBy) ? '-fill' : ''}`}></i>
-            <span>{downVotesBy.length}</span>
-          </a>
+        <a
+          href="#"
+          onClick={handleUpVote}
+          className={isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? 'active' : ''}
+        >
+          <i className={`bi bi-arrow-up-circle${isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? '-fill' : ''}`}></i>
+          <span>{upVotesBy.length}</span>
+        </a>
+        <a
+          href="#"
+          onClick={handleDownVote}
+          className={isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? 'active' : ''}
+        >
+          <i className={`bi bi-arrow-down-circle${isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? '-fill' : ''}`}></i>
+          <span>{downVotesBy.length}</span>
+        </a>
       </div>
     </article>
   );
