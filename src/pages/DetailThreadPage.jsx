@@ -9,6 +9,7 @@ import {
   asyncNeutralVoteDetailThread,
 } from '../states/detailThread/action';
 import Alert from '../components/Alert';
+import Comments from '../components/Comments';
 
 function DetailThreadPage() {
   const { threadId } = useParams();
@@ -75,6 +76,7 @@ function DetailThreadPage() {
         onUpVote={handleUpVoteDetailThread}
         onDownVote={handleDownVoteDetailThread}
       />
+      <Comments />
       {voteDetailThreadError && (
         <div className="position-fixed bottom-0 end-0 p-5 pb-0 fixed-alert">
           <Alert message={voteDetailThreadError} onClose={resetVoteDetailThreadErrorState} type="info" />

@@ -65,12 +65,14 @@ h1 {
   padding: 20px;
 }
 
-.threads-list .thread-item:first-child {
+.threads-list .thread-item:first-child,
+.comments-list .comment-item:first-child {
   border-top-right-radius: 6px;
   border-top-left-radius: 6px;
 }
 
-.threads-list .thread-item:last-child {
+.threads-list .thread-item:last-child,
+.comments-list .comment-item:last-child {
   border-bottom-right-radius: 6px;
   border-bottom-left-radius: 6px;
 }
@@ -105,17 +107,21 @@ h1 {
 .threads-list .thread-footer a:not(.active),
 .thread-card .thread-body time,
 .thread-card .thread-footer,
-.thread-card .thread-footer a:not(.active) {
+.thread-card .thread-footer a:not(.active),
+.comments-list .comment-footer, 
+.comments-list .comment-footer a:not(.active) {
   color: #6c757d;
 }
 
 .threads-list .thread-footer a:hover,
-.thread-card .thread-footer a:hover {
+.thread-card .thread-footer a:hover,
+.comments-list .comment-footer a:hover {
   color: var(--bs-primary);
 }
 
 .threads-list .thread-footer i,
-.thread-card .thread-footer i {
+.thread-card .thread-footer i,
+.comments-list .comment-footer i {
   margin-right: .25rem;
 }
 
@@ -147,4 +153,44 @@ footer {
   background-color: var(--bs-primary);
   height: 3px;
   position: absolute;
+}
+
+/* comments */
+.comments {
+  padding-left: 20px;
+}
+
+.comments .badge {
+  font-size: .625rem;
+}
+
+.comments h3 {
+  padding-right: 4px;
+}
+
+.comments h3 span {
+  transform: translate(0, -30%);
+}
+
+.comment-item {
+  background-color: #fff;
+  padding: 15px;
+  border: 1px solid var(--bs-border-color);
+}
+
+.comment-author img {
+  border-radius: 50%;
+}
+
+.comment-author span,
+.comment-footer {
+  font-size: 0.875rem;
+}
+
+.comment-author time {
+  font-size: .75rem;
+}
+
+.comment-body div:nth-child(2) {
+  font-size: 1.125rem;
 }

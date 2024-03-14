@@ -46,6 +46,10 @@
   resize: vertical;
 }
 
+.comments .ql-editor {
+  min-height: 20vh;
+}
+
 .ql-snow .ql-editor a {
   text-decoration: none;
 }

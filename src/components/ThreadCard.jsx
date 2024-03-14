@@ -13,7 +13,6 @@ function ThreadCard({
   owner,
   upVotesBy,
   downVotesBy,
-  comments,
   onUpVote,
   onDownVote,
 }) {
@@ -82,7 +81,6 @@ ThreadCard.propTypes = {
   owner: PropTypes.objectOf(PropTypes.string).isRequired,
   upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
   downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
-  comments: PropTypes.arrayOf(PropTypes.object).isRequired,
   onUpVote: PropTypes.func.isRequired,
   onDownVote: PropTypes.func.isRequired,
 };
