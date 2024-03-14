@@ -141,8 +141,8 @@ const api = (() => {
     return thread;
   }
 
-  async function upVoteThread(id) {
-    const response = await fetchWithAuth(`${BASE_URL}/threads/${id}/up-vote`, {
+  async function upVoteThread(threadId) {
+    const response = await fetchWithAuth(`${BASE_URL}/threads/${threadId}/up-vote`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -159,27 +159,8 @@ const api = (() => {
     return vote;
   }
 
-  async function downVoteThread(id) {
-    const response = await fetchWithAuth(`${BASE_URL}/threads/${id}/down-vote`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    const responseJson = await response.json();
-
-    const { status, message } = responseJson;
-
-    if (status !== 'success') {
-      throw new Error(message);
-    }
-
-    const { data: { vote } } = responseJson;
-    return vote;
-  }
-
-  async function neutralVoteThread(id) {
-    const response = await fetchWithAuth(`${BASE_URL}/threads/${id}/neutral-vote`, {
+  async function downVoteThread(threadId) {
+    const response = await fetchWithAuth(`${BASE_URL}/threads/${threadId}/down-vote`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -197,8 +178,27 @@ const api = (() => {
     return vote;
   }
 
-  async function getDetailThread(id) {
-    const response = await fetch(`${BASE_URL}/threads/${id}`);
+  async function neutralVoteThread(threadId) {
+    const response = await fetchWithAuth(`${BASE_URL}/threads/${threadId}/neutral-vote`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const { data: { vote } } = responseJson;
+    return vote;
+  }
+
+  async function getDetailThread(threadId) {
+    const response = await fetch(`${BASE_URL}/threads/${threadId}`);
     const responseJson = await response.json();
 
     const { status, message } = responseJson;
