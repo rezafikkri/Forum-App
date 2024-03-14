@@ -38,7 +38,7 @@ function CommentItem({
         </div>
         <SanitizeHTML html={content} className="mt-2" />
       </div>
-      <div className="comment-footer d-flex fw-light gap-3">
+      <div className="comment-footer d-flex fw-light gap-3 row-gap-1 flex-wrap">
         <a href="#" className={isSignedInUserVoted(upVotesBy) ? 'active' : ''}>
           <i className={`bi bi-arrow-up-circle${isSignedInUserVoted(upVotesBy) ? '-fill' : ''}`}></i>
           <span>{upVotesBy.length}</span>

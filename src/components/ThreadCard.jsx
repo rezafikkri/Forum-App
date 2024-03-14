@@ -53,7 +53,7 @@ function ThreadCard({
         <time>{dayjs().to(dayjs(createdAt))}</time>
         <SanitizeHTML html={body} className="mt-2 fs-5" />
       </div>
-      <div className="thread-footer d-flex fw-light gap-3">
+      <div className="thread-footer d-flex fw-light gap-3 row-gap-1 flex-wrap">
           <div className="me-4">
             <i className="bi bi-hash me-0"></i>
             <span>{category}</span>

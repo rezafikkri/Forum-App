@@ -85,7 +85,7 @@ function HomePage() {
             <Link to="/create" className="btn btn-primary ms-auto">Create Thread</Link>
           )}
         </div>
-        <div className="d-flex mt-3 align-items-start">
+        <div className="d-flex mt-3 align-items-start flex-wrap">
           <ThreadsFilter
             threadsLength={threads.length}
             categories={categories}

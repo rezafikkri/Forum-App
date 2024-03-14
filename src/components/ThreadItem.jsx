@@ -64,7 +64,7 @@ function ThreadItem({
           <p className="mb-0">{stripedBody.substring(0, 80) + dots}</p>
         </div>
         </Link>
-        <div className="thread-footer d-flex fw-light gap-3">
+        <div className="thread-footer d-flex fw-light gap-3 row-gap-1 flex-wrap">
           <div>
             <i className="bi bi-hash me-0"></i>
             <span>{category}</span>
