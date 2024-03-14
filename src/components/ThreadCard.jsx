@@ -56,7 +56,7 @@ function ThreadCard({
       <div className="thread-footer d-flex fw-light gap-3">
           <div className="me-4">
             <i className="bi bi-hash me-0"></i>
-            <span>general</span>
+            <span>{category}</span>
           </div>
 
           <a href="#" onClick={handleUpVote} className={isSignedInUserVoted(upVotesBy) ? 'active' : ''}>
