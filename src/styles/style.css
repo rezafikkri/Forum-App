@@ -134,7 +134,8 @@ h1 {
   font-size: .875rem;
 }
 
-.thread-card .thread-body div:not(.thread-author) img {
+.thread-card .thread-body div:not(.thread-author) img,
+.comment-item .comment-body div:not(.comment-author) img {
   width: 100%;
 }
 

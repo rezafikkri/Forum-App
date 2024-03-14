@@ -213,6 +213,26 @@ const api = (() => {
     return detailThread;
   }
 
+  async function createComment({ threadId, content }) {
+    const response = await fetchWithAuth(`${BASE_URL}/threads/${threadId}/comments`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ content }),
+    });
+    const responseJson = await response.json();
+
+    const { status, message } = responseJson;
+
+    if (status !== 'success') {
+      throw new Error(message);
+    }
+
+    const { data: { comment } } = responseJson;
+    return comment;
+  }
+
   return {
     putAccessToken,
     getAccessToken,
@@ -227,6 +247,7 @@ const api = (() => {
     downVoteThread,
     neutralVoteThread,
     getDetailThread,
+    createComment,
   };
 })();
 

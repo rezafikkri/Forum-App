@@ -43,6 +43,12 @@ function detailThreadReducer(detailThread = null, action = {}) {
       }
       return detailThread;
 
+    case ActionType.CREATE_COMMENT:
+      return {
+        ...detailThread,
+        comments: [ action.payload.comment, ...detailThread.comments ],
+      };
+
     default:
       return detailThread;
   }

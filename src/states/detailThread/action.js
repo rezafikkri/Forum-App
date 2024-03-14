@@ -7,6 +7,7 @@ const ActionType = {
   UP_VOTE_DETAIL_THREAD: 'UP_VOTE_DETAIL_THREAD',
   DOWN_VOTE_DETAIL_THREAD: 'DOWN_VOTE_THREAD',
   NEUTRAL_VOTE_DETAIL_THREAD: 'NEUTRAL_VOTE_DETAIL_THREAD',
+  CREATE_COMMENT: 'CREATE_COMMENT',
 };
 
 function receiveDetailThreadActionCreator(detailThread) {
@@ -52,6 +53,15 @@ function neutralVoteDetailThreadActionCreator({ threadId, userId, target }) {
 function clearDetailThreadActionCreator() {
   return {
     type: ActionType.CLEAR_DETAIL_THREAD,
+  };
+}
+
+function createCommentActionCreator(comment) {
+  return {
+    type: ActionType.CREATE_COMMENT,
+    payload: {
+      comment,
+    },
   };
 }
 
@@ -139,14 +149,32 @@ function asyncNeutralVoteDetailThread({ threadId, target }) {
   };
 }
 
+function asyncCreateComment({ threadId, content }) {
+  return async (dispatch) => {
+    try {
+      dispatch(showLoading());
+
+      const comment = await api.createComment({ threadId, content });
+      dispatch(createCommentActionCreator(comment));
+      return comment;
+    } catch (error) {
+      return Promise.reject(error.message);
+    } finally {
+      dispatch(hideLoading());
+    }
+  };
+}
+
 export {
   ActionType,
   receiveDetailThreadActionCreator,
   upVoteDetailThreadActionCreator,
   downVoteDetailThreadActionCreator,
   neutralVoteDetailThreadActionCreator,
+  createCommentActionCreator,
   asyncReceiveDetailThread,
   asyncUpVoteDetailThread,
   asyncDownVoteDetailThread,
   asyncNeutralVoteDetailThread,
+  asyncCreateComment,
 };

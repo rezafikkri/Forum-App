@@ -1,15 +1,30 @@
 import { useRef } from 'react';
 import QuillEditor from './QuillEditor';
+import PropTypes from 'prop-types';
 // styles
 import 'quill/dist/quill.snow.css';
 import '../styles/quill.custom.css';
 
-function CommentInput() {
+function CommentInput({ onCreateComment }) {
   // Use a ref to access the quill instance directly
   const quillRef = useRef();
 
+  function handleSubmit(e) {
+    e.preventDefault();
+
+    let content = '';
+    if (quillRef.current.getLength() > 1) {
+      content = quillRef.current.getSemanticHTML();
+    }
+
+    onCreateComment(content).then(() => {
+      // reset quill editor content
+      quillRef.current.setContents([]);
+    });
+  }
+
   return (
-    <form className="text-end">
+    <form className="text-end" onSubmit={handleSubmit}>
       <div className="mb-2 text-start">
         <QuillEditor ref={quillRef} />
       </div>
@@ -17,5 +32,9 @@ function CommentInput() {
     </form>
   );
 }
+
+CommentInput.propTypes = {
+  onCreateComment: PropTypes.func.isRequired,
+};
 
 export default CommentInput;
