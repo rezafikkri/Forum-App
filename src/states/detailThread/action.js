@@ -22,31 +22,28 @@ function receiveDetailThreadActionCreator(detailThread) {
   };
 }
 
-function upVoteDetailThreadActionCreator({ threadId, userId }) {
+function upVoteDetailThreadActionCreator(userId) {
   return {
     type: ActionType.UP_VOTE_DETAIL_THREAD,
     payload: {
-      threadId,
       userId,
     },
   };
 }
 
-function downVoteDetailThreadActionCreator({ threadId, userId }) {
+function downVoteDetailThreadActionCreator(userId) {
   return {
     type: ActionType.DOWN_VOTE_DETAIL_THREAD,
     payload: {
-      threadId,
       userId,
     },
   };
 }
 
-function neutralVoteDetailThreadActionCreator({ threadId, userId, target }) {
+function neutralVoteDetailThreadActionCreator({ userId, target }) {
   return {
     type: ActionType.NEUTRAL_VOTE_DETAIL_THREAD,
     payload: {
-      threadId,
       userId,
       target,
     },
@@ -119,18 +116,18 @@ function asyncUpVoteDetailThread({ threadId, isDownVoted }) {
   return async (dispatch, getState) => {
     dispatch(showLoading());
 
-    const { authUser: { id } } = getState();
-    dispatch(upVoteDetailThreadActionCreator({ threadId, userId: id }));
+    const { authUser: { id: userId } } = getState();
+    dispatch(upVoteDetailThreadActionCreator(userId));
     // if signed in user, has downvoted, then neutral downvote
-    dispatch(neutralVoteDetailThreadActionCreator({ threadId, userId: id, target: 'down-vote' }));
+    dispatch(neutralVoteDetailThreadActionCreator({ userId, target: 'down-vote' }));
 
     try {
       await api.upVoteThread(threadId);
     } catch (error) {
-      dispatch(neutralVoteDetailThreadActionCreator({ threadId, userId: id, target: 'up-vote' }));
+      dispatch(neutralVoteDetailThreadActionCreator({ userId, target: 'up-vote' }));
       // if signed in user, has downvoted, then downvote again
       if (isDownVoted) {
-        dispatch(downVoteDetailThreadActionCreator({ threadId, userId: id }));
+        dispatch(downVoteDetailThreadActionCreator(userId));
       }
     }
 
@@ -142,18 +139,18 @@ function asyncDownVoteDetailThread({ threadId, isUpVoted }) {
   return async (dispatch, getState) => {
     dispatch(showLoading());
 
-    const { authUser: { id } } = getState();
-    dispatch(downVoteDetailThreadActionCreator({ threadId, userId: id }));
+    const { authUser: { id: userId } } = getState();
+    dispatch(downVoteDetailThreadActionCreator(userId));
     // if signed in user, has upvoted, then neutral upvote
-    dispatch(neutralVoteDetailThreadActionCreator({ threadId, userId: id, target: 'up-vote' }));
+    dispatch(neutralVoteDetailThreadActionCreator({ userId, target: 'up-vote' }));
 
     try {
       await api.downVoteThread(threadId);
     } catch (error) {
-      dispatch(neutralVoteDetailThreadActionCreator({ threadId, userId: id, target: 'down-vote' }));
+      dispatch(neutralVoteDetailThreadActionCreator({ userId, target: 'down-vote' }));
       // if signed in user, has upvoted, then upvote again
       if (isUpVoted) {
-        dispatch(upVoteDetailThreadActionCreator({ threadId, userId: id }));
+        dispatch(upVoteDetailThreadActionCreator(userId));
       }
     }
 
@@ -165,17 +162,17 @@ function asyncNeutralVoteDetailThread({ threadId, target }) {
   return async (dispatch, getState) => {
     dispatch(showLoading());
 
-    const { authUser: { id } } = getState();
-    dispatch(neutralVoteDetailThreadActionCreator({ threadId, userId: id, target }));
+    const { authUser: { id: userId } } = getState();
+    dispatch(neutralVoteDetailThreadActionCreator({ userId, target }));
 
     try {
       await api.neutralVoteThread(threadId);
     } catch (error) {
       // check button clicked, up vote or down vote
       if (target === 'up-vote') {
-        dispatch(upVoteDetailThreadActionCreator({ threadId, userId: id }));
+        dispatch(upVoteDetailThreadActionCreator(userId));
       } else {
-        dispatch(downVoteDetailThreadActionCreator({ threadId, userId: id }));
+        dispatch(downVoteDetailThreadActionCreator(userId));
       }
     }
 
