@@ -23,7 +23,7 @@ function HomePage() {
   function handleUpVoteThread({ threadId, upVotesBy, downVotesBy }) {
     // if user is not sign in yet
     if (authUser === null) {
-      setVoteThreadError('You must be signed in to upvote!');
+      setVoteThreadError('You must be signed in to upvote thread!');
       return false;
     }
     
@@ -42,7 +42,7 @@ function HomePage() {
   function handleDownVoteThread({ threadId, downVotesBy, upVotesBy }) {
     // if user is not sign in yet
     if (authUser === null) {
-      setVoteThreadError('You must be signed in to downvote!');
+      setVoteThreadError('You must be signed in to downvote thread!');
       return false;
     }
     
