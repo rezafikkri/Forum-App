@@ -1,11 +1,11 @@
 import PropTypes from 'prop-types';
 import CommentItem from './CommentItem';
 
-function CommentsList({ comments }) {
+function CommentsList({ comments, onUpVote, onDownVote }) {
   return (
     <article className="comments-list mt-4">
       {comments.map((comment) => (
-        <CommentItem key={comment.id} {...comment} />
+        <CommentItem key={comment.id} {...comment} onUpVote={onUpVote} onDownVote={onDownVote} />
       ))}
     </article>
   );
@@ -13,6 +13,8 @@ function CommentsList({ comments }) {
 
 CommentsList.propTypes = {
   comments: PropTypes.array.isRequired,
+  onUpVote: PropTypes.func.isRequired,
+  onDownVote: PropTypes.func.isRequired,
 };
 
 export default CommentsList;

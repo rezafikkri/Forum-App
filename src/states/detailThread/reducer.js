@@ -49,6 +49,64 @@ function detailThreadReducer(detailThread = null, action = {}) {
         comments: [ action.payload.comment, ...detailThread.comments ],
       };
 
+    case ActionType.UP_VOTE_COMMENT:
+      return {
+        ...detailThread,
+        comments: detailThread.comments.map((comment) => {
+          if (comment.id === action.payload.commentId) {
+            return {
+              ...comment,
+              upVotesBy: comment.upVotesBy.includes(action.payload.userId)
+                ? comment.upVotesBy
+                : [...comment.upVotesBy, action.payload.userId],
+            }
+          }
+          return comment;
+        }),
+      };
+
+    case ActionType.DOWN_VOTE_COMMENT:
+      return {
+        ...detailThread,
+        comments: detailThread.comments.map((comment) => {
+          if (comment.id === action.payload.commentId) {
+            return {
+              ...comment,
+              downVotesBy: comment.downVotesBy.includes(action.payload.userId)
+                ? comment.downVotesBy
+                : [ ...comment.downVotesBy, action.payload.userId ],
+            };
+          }
+          return comment;
+        }),
+      };
+
+    case ActionType.NEUTRAL_VOTE_COMMENT:
+      return {
+        ...detailThread,
+        comments: detailThread.comments.map((comment) => {
+          if (comment.id === action.payload.commentId) {  
+            // check, if target up vote or down vote
+            if (action.payload.target === 'up-vote') {
+              return {
+                ...comment,
+                upVotesBy: comment.upVotesBy.includes(action.payload.userId)
+                  ? comment.upVotesBy.filter((userId) => userId !== action.payload.userId)
+                  : comment.upVotesBy,
+              };
+            } else if (action.payload.target === 'down-vote') {
+              return {
+                ...comment,
+                downVotesBy: comment.downVotesBy.includes(action.payload.userId)
+                  ? comment.downVotesBy.filter((userId) => userId !== action.payload.userId)
+                  : comment.downVotesBy,
+              };
+            }
+          }
+          return comment;
+        }),
+      };
+
     default:
       return detailThread;
   }

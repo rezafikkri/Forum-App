@@ -12,10 +12,24 @@ function CommentItem({
   owner,
   upVotesBy,
   downVotesBy,
+  onUpVote,
+  onDownVote,
 }) {
   const authUser = useSelector((states) => states.authUser);
 
   dayjs.extend(relativeTime);
+
+  function handleUpVote(e) {
+    e.preventDefault();
+
+    onUpVote({ commentId: id, upVotesBy, downVotesBy });
+  }
+
+  function handleDownVote(e) {
+    e.preventDefault();
+
+    onDownVote({ commentId: id, downVotesBy, upVotesBy });
+  }
 
   return (
     <article className="comment-item mb-1">
@@ -38,6 +52,7 @@ function CommentItem({
         <a
           href="#"
           className={isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? 'active' : ''}
+          onClick={handleUpVote}
         >
           <i className={`bi bi-arrow-up-circle${isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? '-fill' : ''}`}></i>
           <span>{upVotesBy.length}</span>
@@ -45,6 +60,7 @@ function CommentItem({
         <a
           href="#"
           className={isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? 'active' : ''}
+          onClick={handleDownVote}
         >
           <i className={`bi bi-arrow-down-circle${isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? '-fill' : ''}`}></i>
           <span>{downVotesBy.length}</span>
