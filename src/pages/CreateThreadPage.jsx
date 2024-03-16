@@ -27,7 +27,9 @@ function CreateThreadPage() {
   return (
     <div className="row justify-content-center">
       <div className="col-sm-12 col-md-10">
-        <h1 className="fs-2 fw-bold text-body-emphasis me-auto mt-80px mb-4">Create Thread</h1>
+        <header className="forum-header">
+          <h1 className="fs-2 fw-bold text-body-emphasis me-auto mb-4">Create Thread</h1>
+        </header>
         {createThreadError && <Alert message={createThreadError} onClose={resetCreateThreadErrorState} />}
         <ThreadInput onCreateThread={handleCreateThread} />
       </div>
