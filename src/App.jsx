@@ -1,15 +1,16 @@
 import { Route, Routes } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { asyncPreloadProccess } from './states/isPreload/action';
+import { asyncUnsetAuthUser } from './states/authUser/action';
+import Layout from './Layout';
 import RegisterPage from './pages/RegisterPage';
 import SignInPage from './pages/SignInPage';
 import Loading from './components/Loading';
 import HomePage from './pages/HomePage';
 import CreateThreadPage from './pages/CreateThreadPage';
 import DetailThreadPage from './pages/DetailThreadPage';
-import { useEffect } from 'react';
-import { asyncPreloadProccess } from './states/isPreload/action';
-import Layout from './Layout';
-import { asyncUnsetAuthUser } from './states/authUser/action';
+import LearderboardsPage from './pages/LearderboardsPage';
 
 export default function App() {
   const authUser = useSelector((states) => states.authUser);
@@ -44,6 +45,7 @@ export default function App() {
             <Route index="true" element={<HomePage />} />
             <Route path="create" element={<CreateThreadPage />} />
             <Route path="threads/:threadId" element={<DetailThreadPage />} />
+            <Route path="leaderboards" element={<LearderboardsPage />} />
           </Route>
         </Routes>
       </div>

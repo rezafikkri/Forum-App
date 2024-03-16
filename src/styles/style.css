@@ -195,3 +195,33 @@ footer {
 .comment-body div:nth-child(2) {
   font-size: 1.125rem;
 }
+
+/* Leaderboards */
+.leaderboards-list {
+  margin-top: 25px;
+}
+
+.leaderboard-number,
+.leaderboard-body {
+  background-color: #fff;
+  border-radius: 6px;
+  border: 1px solid var(--bs-border-color);
+}
+
+.leaderboard-number {
+  padding: 10px;
+  border-top-right-radius: 0px;
+  border-bottom-right-radius: 0px;
+  margin-right: 2px;
+}
+
+.leaderboard-body {
+  padding: 10px 15px;
+  border-top-left-radius: 0px;
+  border-bottom-left-radius: 0px;
+}
+
+.leaderboard-profile img {
+  border-radius: 50%;
+}
+

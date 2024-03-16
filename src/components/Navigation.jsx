@@ -28,7 +28,10 @@ function Navigation({ onSignOut }) {
                 <Link className={`nav-link ${isNavLinkActive('/')}`} to="/">Threads</Link>
               </li>
               <li className="nav-item">
-                <Link className="nav-link" to="/leaderboards">Leaderboards</Link>
+                <Link
+                  className={`nav-link ${isNavLinkActive('/leaderboards')}`}
+                  to="/leaderboards"
+                >Leaderboards</Link>
               </li>
             </ul>
             <ul className="navbar-nav ms-auto mb-2 mb-sm-0">
