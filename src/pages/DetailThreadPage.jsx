@@ -1,7 +1,7 @@
 import { useParams } from 'react-router-dom';
-import ThreadCard from '../components/ThreadCard';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import ThreadCard from '../components/ThreadCard';
 import {
   asyncReceiveDetailThread,
   asyncUpVoteDetailThread,
@@ -12,7 +12,7 @@ import Alert from '../components/Alert';
 import Comments from '../components/Comments';
 
 function DetailThreadPage() {
-  const { threadId } = useParams();
+  const { threadId: threadIdParam } = useParams();
   const dispatch = useDispatch();
   const detailThread = useSelector((states) => states.detailThread);
   const [voteDetailThreadError, setVoteDetailThreadError] = useState(null);
@@ -28,7 +28,7 @@ function DetailThreadPage() {
       setVoteDetailThreadError('You must be signed in to upvote thread!');
       return false;
     }
-    
+
     // check, if signed in user not upvote yet
     if (!upVotesBy.includes(authUser.id)) {
       // check, if signed in user has downvoted
@@ -39,6 +39,8 @@ function DetailThreadPage() {
     } else {
       dispatch(asyncNeutralVoteDetailThread({ threadId, target: 'up-vote' }));
     }
+
+    return true;
   }
 
   function handleDownVoteDetailThread({ threadId, downVotesBy, upVotesBy }) {
@@ -47,7 +49,7 @@ function DetailThreadPage() {
       setVoteDetailThreadError('You must be signed in to downvote thread!');
       return false;
     }
-    
+
     // check, if signed in user not downvote yet
     if (!downVotesBy.includes(authUser.id)) {
       // check, if signed in user has upvoted
@@ -58,10 +60,12 @@ function DetailThreadPage() {
     } else {
       dispatch(asyncNeutralVoteDetailThread({ threadId, target: 'down-vote' }));
     }
+
+    return true;
   }
 
   useEffect(() => {
-    dispatch(asyncReceiveDetailThread(threadId));
+    dispatch(asyncReceiveDetailThread(threadIdParam));
   }, []);
 
   if (!detailThread) return null;

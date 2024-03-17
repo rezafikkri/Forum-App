@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import CommentItem from './CommentItem';
+import CommentItem, { commentItemShape } from './CommentItem';
 
 function CommentsList({ comments, onUpVote, onDownVote }) {
   return (
@@ -12,7 +12,7 @@ function CommentsList({ comments, onUpVote, onDownVote }) {
 }
 
 CommentsList.propTypes = {
-  comments: PropTypes.array.isRequired,
+  comments: PropTypes.arrayOf(PropTypes.shape(commentItemShape)).isRequired,
   onUpVote: PropTypes.func.isRequired,
   onDownVote: PropTypes.func.isRequired,
 };

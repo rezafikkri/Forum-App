@@ -1,7 +1,8 @@
 import { useRef } from 'react';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import QuillEditor from './QuillEditor';
 import useInput from '../hooks/useInput';
-import { Link } from 'react-router-dom';
 
 // styles
 import 'quill/dist/quill.snow.css';
@@ -44,7 +45,10 @@ function ThreadInput({ onCreateThread }) {
           value={category}
           onChange={handleCategoryChange}
         />
-        <div className="form-text">Category is optional, if left blank, then the default value of category is <b>general</b></div>
+        <div className="form-text">
+          Category is optional, if left blank, then the default value of category is
+          <b> general</b>
+        </div>
       </div>
       <div className="mb-3">
         <label className="form-label">Body</label>
@@ -52,10 +56,14 @@ function ThreadInput({ onCreateThread }) {
       </div>
       <div className="d-flex justify-content-end">
         <Link to="/" className="btn btn-outline-secondary me-1">Cancel</Link>
-        <button className="btn btn-primary">Save</button>
+        <button type="submit" className="btn btn-primary">Save</button>
       </div>
     </form>
   );
 }
+
+ThreadInput.propTypes = {
+  onCreateThread: PropTypes.func.isRequired,
+};
 
 export default ThreadInput;

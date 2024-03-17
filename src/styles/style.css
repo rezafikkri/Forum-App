@@ -28,7 +28,7 @@ h1 {
   color: var(--bs-primary);
 }
 
-.navbar-nav .nav-link.profile + .dropdown-menu a {
+.navbar-nav .nav-link.profile + .dropdown-menu button {
   color: var(--bs-danger);
 }
 
@@ -102,19 +102,29 @@ h1 {
   font-size: .875rem;
 }
 
+.threads-list .thread-footer button,
+.thread-card .thread-footer button,
+.comments-list .thread-footer button {
+  padding: 0px;
+  border: 0;
+  background-color: transparent;
+  font-weight: inherit;
+  color: var(--bs-primary);
+}
+
 .threads-list .thread-footer,
-.threads-list .thread-footer a:not(.active),
+.threads-list .thread-footer button:not(.active),
 .thread-card .thread-body time,
 .thread-card .thread-footer,
-.thread-card .thread-footer a:not(.active),
+.thread-card .thread-footer button:not(.active),
 .comments-list .comment-footer, 
-.comments-list .comment-footer a:not(.active) {
+.comments-list .comment-footer button:not(.active) {
   color: #6c757d;
 }
 
-.threads-list .thread-footer a:hover,
-.thread-card .thread-footer a:hover,
-.comments-list .comment-footer a:hover {
+.threads-list .thread-footer button:hover,
+.thread-card .thread-footer button:hover,
+.comments-list .comment-footer button:hover {
   color: var(--bs-primary);
 }
 

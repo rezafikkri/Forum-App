@@ -1,23 +1,23 @@
-import { useDispatch } from "react-redux";
-import SignInInput from "../components/SignInInput";
-import { asyncSetAuthUser } from "../states/authUser/action";
-import { useState } from "react";
-import Alert from "../components/Alert";
-import { useNavigate } from "react-router-dom";
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import SignInInput from '../components/SignInInput';
+import { asyncSetAuthUser } from '../states/authUser/action';
+import Alert from '../components/Alert';
 
 export default function SignInPage() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [ signInError, setSignInError ] = useState(null);
+  const [signInError, setSignInError] = useState(null);
 
   function handleSignIn({ email, password }) {
     dispatch(asyncSetAuthUser({ email, password }))
       .then(() => {
         navigate('/');
       })
-      .catch((errorMessage) => {
-        setSignInError(errorMessage);
+      .catch((error) => {
+        setSignInError(error.message);
       });
   }
 

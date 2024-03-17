@@ -1,6 +1,14 @@
 const api = (() => {
   const BASE_URL = 'https://forum-api.dicoding.dev/v1';
 
+  function putAccessToken(token) {
+    localStorage.setItem('accessToken', token);
+  }
+
+  function getAccessToken() {
+    return localStorage.getItem('accessToken');
+  }
+
   async function fetchWithAuth(url, options = {}) {
     return fetch(url, {
       ...options,
@@ -9,14 +17,6 @@ const api = (() => {
         Authorization: `Bearer ${getAccessToken()}`,
       },
     });
-  }
-
-  function putAccessToken(token) {
-    localStorage.setItem('accessToken', token);
-  }
-
-  function getAccessToken() {
-    return localStorage.getItem('accessToken');
   }
 
   async function register({ name, email, password }) {
@@ -111,7 +111,7 @@ const api = (() => {
 
   function getAllCategories(threads) {
     return {
-      values: [ 'all', ...new Set(threads.map((thread) => thread.category)) ],
+      values: ['all', ...new Set(threads.map((thread) => thread.category))],
       selected: 'all',
     };
   }

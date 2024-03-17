@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
-import SanitizeHTML from './SanitizeHTML';
 import { useSelector } from 'react-redux';
+import SanitizeHTML from './SanitizeHTML';
 import { isSignedInUserVoted } from '../utils';
 
 function CommentItem({
@@ -42,41 +42,54 @@ function CommentItem({
             className="me-2"
           />
           <div className="lh-1">
-            <span className="d-block">{owner.name}</span>  
+            <span className="d-block">{owner.name}</span>
             <time className="text-secondary">{dayjs().to(dayjs(createdAt))}</time>
           </div>
         </div>
         <SanitizeHTML html={content} className="mt-2" />
       </div>
       <div className="comment-footer d-flex fw-light gap-3 row-gap-1 flex-wrap">
-        <a
-          href="#"
+        <button
+          type="submit"
           className={isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? 'active' : ''}
           onClick={handleUpVote}
         >
-          <i className={`bi bi-arrow-up-circle${isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? '-fill' : ''}`}></i>
+          <i className={`bi bi-arrow-up-circle${isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? '-fill' : ''}`} />
           <span>{upVotesBy.length}</span>
-        </a>
-        <a
-          href="#"
+        </button>
+        <button
+          type="button"
           className={isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? 'active' : ''}
           onClick={handleDownVote}
         >
-          <i className={`bi bi-arrow-down-circle${isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? '-fill' : ''}`}></i>
+          <i className={`bi bi-arrow-down-circle${isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? '-fill' : ''}`} />
           <span>{downVotesBy.length}</span>
-        </a>
+        </button>
       </div>
     </article>
   );
 }
 
-CommentItem.propTypes = {
+const ownerShape = {
+  name: PropTypes.string.isRequired,
+  avatar: PropTypes.string.isRequired,
+};
+
+const commentItemShape = {
   id: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   createdAt: PropTypes.string.isRequired,
-  owner: PropTypes.object.isRequired,
-  upVotesBy: PropTypes.array.isRequired,
-  downVotesBy: PropTypes.array.isRequired,
+  owner: PropTypes.shape(ownerShape).isRequired,
+  upVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
+  downVotesBy: PropTypes.arrayOf(PropTypes.string).isRequired,
 };
+
+CommentItem.propTypes = {
+  ...commentItemShape,
+  onUpVote: PropTypes.func.isRequired,
+  onDownVote: PropTypes.func.isRequired,
+};
+
+export { commentItemShape };
 
 export default CommentItem;

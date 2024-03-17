@@ -1,5 +1,5 @@
-import { hideLoading, showLoading } from "react-redux-loading-bar";
-import api from "../../utils/api";
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import api from '../../utils/api';
 
 const ActionType = {
   RECEIVE_THREADS: 'RECEIVE_THREADS',
@@ -55,7 +55,7 @@ function asyncCreateThread({ title, category, body }) {
 
       return await api.createThread({ title, category, body });
     } catch (error) {
-      return Promise.reject(error.message);
+      throw new Error(error.message);
     } finally {
       dispatch(hideLoading());
     }
@@ -72,16 +72,18 @@ function asyncUpVoteThread({ threadId, isDownVoted }) {
     dispatch(neutralVoteThreadActionCreator({ threadId, userId: id, target: 'down-vote' }));
 
     try {
-      await api.upVoteThread(threadId);
+      return await api.upVoteThread(threadId);
     } catch (error) {
       dispatch(neutralVoteThreadActionCreator({ threadId, userId: id, target: 'up-vote' }));
       // if signed in user, has downvoted, then downvote again
       if (isDownVoted) {
         dispatch(downVoteThreadActionCreator({ threadId, userId: id }));
       }
-    }
 
-    dispatch(hideLoading());
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
+    }
   };
 }
 
@@ -102,9 +104,11 @@ function asyncDownVoteThread({ threadId, isUpVoted }) {
       if (isUpVoted) {
         dispatch(upVoteThreadActionCreator({ threadId, userId: id }));
       }
-    }
 
-    dispatch(hideLoading());
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
+    }
   };
 }
 
@@ -116,7 +120,7 @@ function asyncNeutralVoteThread({ threadId, target }) {
     dispatch(neutralVoteThreadActionCreator({ threadId, userId: id, target }));
 
     try {
-      await api.neutralVoteThread(threadId);
+      return await api.neutralVoteThread(threadId);
     } catch (error) {
       // check button clicked, up vote or down vote
       if (target === 'up-vote') {
@@ -124,9 +128,11 @@ function asyncNeutralVoteThread({ threadId, target }) {
       } else {
         dispatch(downVoteThreadActionCreator({ threadId, userId: id }));
       }
-    }
 
-    dispatch(hideLoading());
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
+    }
   };
 }
 

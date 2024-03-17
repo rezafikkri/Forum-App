@@ -1,11 +1,11 @@
-import { hideLoading, showLoading } from "react-redux-loading-bar";
-import api from "../../utils/api";
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import api from '../../utils/api';
 
 const ActionType = {
   RECEIVE_DETAIL_THREAD: 'RECEIVE_DETAIL_THREAD',
   CLEAR_DETAIL_THREAD: 'CLEAR_DETAIL_THREAD',
   UP_VOTE_DETAIL_THREAD: 'UP_VOTE_DETAIL_THREAD',
-  DOWN_VOTE_DETAIL_THREAD: 'DOWN_VOTE_THREAD',
+  DOWN_VOTE_DETAIL_THREAD: 'DOWN_VOTE_DETAIL_THREAD',
   NEUTRAL_VOTE_DETAIL_THREAD: 'NEUTRAL_VOTE_DETAIL_THREAD',
   CREATE_COMMENT: 'CREATE_COMMENT',
   UP_VOTE_COMMENT: 'UP_VOTE_COMMENT',
@@ -104,11 +104,13 @@ function asyncReceiveDetailThread(threadId) {
     try {
       const detailThread = await api.getDetailThread(threadId);
       dispatch(receiveDetailThreadActionCreator(detailThread));
-    } catch (error) {
-      return Promise.reject(error.message);
-    }
 
-    dispatch(hideLoading());
+      return detailThread;
+    } catch (error) {
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
+    }
   };
 }
 
@@ -122,16 +124,17 @@ function asyncUpVoteDetailThread({ threadId, isDownVoted }) {
     dispatch(neutralVoteDetailThreadActionCreator({ userId, target: 'down-vote' }));
 
     try {
-      await api.upVoteThread(threadId);
+      return await api.upVoteThread(threadId);
     } catch (error) {
       dispatch(neutralVoteDetailThreadActionCreator({ userId, target: 'up-vote' }));
       // if signed in user, has downvoted, then downvote again
       if (isDownVoted) {
         dispatch(downVoteDetailThreadActionCreator(userId));
       }
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
     }
-
-    dispatch(hideLoading());
   };
 }
 
@@ -145,16 +148,18 @@ function asyncDownVoteDetailThread({ threadId, isUpVoted }) {
     dispatch(neutralVoteDetailThreadActionCreator({ userId, target: 'up-vote' }));
 
     try {
-      await api.downVoteThread(threadId);
+      return await api.downVoteThread(threadId);
     } catch (error) {
       dispatch(neutralVoteDetailThreadActionCreator({ userId, target: 'down-vote' }));
       // if signed in user, has upvoted, then upvote again
       if (isUpVoted) {
         dispatch(upVoteDetailThreadActionCreator(userId));
       }
-    }
 
-    dispatch(hideLoading());
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
+    }
   };
 }
 
@@ -166,7 +171,7 @@ function asyncNeutralVoteDetailThread({ threadId, target }) {
     dispatch(neutralVoteDetailThreadActionCreator({ userId, target }));
 
     try {
-      await api.neutralVoteThread(threadId);
+      return await api.neutralVoteThread(threadId);
     } catch (error) {
       // check button clicked, up vote or down vote
       if (target === 'up-vote') {
@@ -174,9 +179,11 @@ function asyncNeutralVoteDetailThread({ threadId, target }) {
       } else {
         dispatch(downVoteDetailThreadActionCreator(userId));
       }
-    }
 
-    dispatch(hideLoading());
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
+    }
   };
 }
 
@@ -189,7 +196,7 @@ function asyncCreateComment({ threadId, content }) {
       dispatch(createCommentActionCreator(comment));
       return comment;
     } catch (error) {
-      return Promise.reject(error.message);
+      throw new Error(error.message);
     } finally {
       dispatch(hideLoading());
     }
@@ -202,7 +209,7 @@ function asyncUpVoteComment({ commentId, isDownVoted }) {
 
     const {
       authUser: { id },
-      detailThread: { id: threadId }
+      detailThread: { id: threadId },
     } = getState();
 
     dispatch(upVoteCommentActionCreator({ commentId, userId: id }));
@@ -210,16 +217,18 @@ function asyncUpVoteComment({ commentId, isDownVoted }) {
     dispatch(neutralVoteCommentActionCreator({ commentId, userId: id, target: 'down-vote' }));
 
     try {
-      await api.upVoteComment({ threadId, commentId });
+      return await api.upVoteComment({ threadId, commentId });
     } catch (error) {
       dispatch(neutralVoteCommentActionCreator({ commentId, userId: id, target: 'up-vote' }));
       // if signed in user, has downvoted, then downvote again
       if (isDownVoted) {
         dispatch(downVoteCommentActionCreator({ commentId, userId: id }));
       }
-    }
 
-    dispatch(hideLoading());
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
+    }
   };
 }
 
@@ -229,7 +238,7 @@ function asyncDownVoteComment({ commentId, isUpVoted }) {
 
     const {
       authUser: { id },
-      detailThread: { id: threadId }
+      detailThread: { id: threadId },
     } = getState();
 
     dispatch(downVoteCommentActionCreator({ commentId, userId: id }));
@@ -237,16 +246,18 @@ function asyncDownVoteComment({ commentId, isUpVoted }) {
     dispatch(neutralVoteCommentActionCreator({ commentId, userId: id, target: 'up-vote' }));
 
     try {
-      await api.downVoteComment({ threadId, commentId });
+      return await api.downVoteComment({ threadId, commentId });
     } catch (error) {
       dispatch(neutralVoteCommentActionCreator({ commentId, userId: id, target: 'down-vote' }));
       // if signed in user, has upvoted, then upvote again
       if (isUpVoted) {
         dispatch(upVoteCommentActionCreator({ commentId, userId: id }));
       }
-    }
 
-    dispatch(hideLoading());
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
+    }
   };
 }
 
@@ -256,13 +267,13 @@ function asyncNeutralVoteComment({ commentId, target }) {
 
     const {
       authUser: { id },
-      detailThread: { id: threadId }
+      detailThread: { id: threadId },
     } = getState();
 
     dispatch(neutralVoteCommentActionCreator({ commentId, userId: id, target }));
 
     try {
-      await api.neutralVoteComment({ threadId, commentId });
+      return await api.neutralVoteComment({ threadId, commentId });
     } catch (error) {
       // check button clicked, up vote or down vote
       if (target === 'up-vote') {
@@ -270,9 +281,11 @@ function asyncNeutralVoteComment({ commentId, target }) {
       } else {
         dispatch(downVoteCommentActionCreator({ commentId, userId: id }));
       }
-    }
 
-    dispatch(hideLoading());
+      throw new Error(error.message);
+    } finally {
+      dispatch(hideLoading());
+    }
   };
 }
 

@@ -10,17 +10,18 @@ function Navigation({ onSignOut }) {
     const browserPath = location.pathname;
 
     if (path === browserPath) return 'active';
+    return '';
   }
 
   return (
     <div className="row justify-content-center">
       <div className="col-12 col-md-10">
         <nav className="navbar navbar-expand-sm py-3">
-          <a className="navbar-brand" href="#">
-            <img src="/logo.svg" alt="Forum App" width="30"/>
-          </a>
+          <Link className="navbar-brand" to="/">
+            <img src="/logo.svg" alt="Forum App" width="30" />
+          </Link>
           <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
+            <span className="navbar-toggler-icon" />
           </button>
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-2 mb-sm-0">
@@ -31,7 +32,9 @@ function Navigation({ onSignOut }) {
                 <Link
                   className={`nav-link ${isNavLinkActive('/leaderboards')}`}
                   to="/leaderboards"
-                >Leaderboards</Link>
+                >
+                  Leaderboards
+                </Link>
               </li>
             </ul>
             <ul className="navbar-nav ms-auto mb-2 mb-sm-0">
@@ -40,17 +43,18 @@ function Navigation({ onSignOut }) {
                   <Link to="/signin" className="nav-link">Sign In</Link>
                 ) : (
                   <>
-                    <a
+                    <button
+                      type="button"
                       className="nav-link dropdown-toggle py-1 px-0 profile"
-                      href="#"
-                      role="button"
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <img src={authUser.avatar} width="30" alt={authUser.name}/>
-                    </a>
+                      <img src={authUser.avatar} width="30" alt={authUser.name} />
+                    </button>
                     <ul className="dropdown-menu dropdown-menu-end mt-2">
-                      <li><a onClick={onSignOut} className="dropdown-item" href="#">Logout</a></li> 
+                      <li>
+                        <button type="submit" onClick={onSignOut} className="dropdown-item">Logout</button>
+                      </li>
                     </ul>
                   </>
                 )}

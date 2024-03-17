@@ -21,7 +21,7 @@ function asyncRegisterUser({ name, email, password }) {
 
       return await api.register({ name, email, password });
     } catch (error) {
-      return Promise.reject(error.message);
+      throw new Error(error.message);
     } finally {
       dispatch(hideLoading());
     }

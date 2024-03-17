@@ -1,8 +1,8 @@
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import RegisterInput from '../components/RegisterInput';
-import { useDispatch } from 'react-redux';
 import { asyncRegisterUser } from '../states/users/action';
-import { useState } from 'react';
 import Alert from '../components/Alert';
 
 function RegisterPage() {
@@ -14,9 +14,9 @@ function RegisterPage() {
   function handleRegister({ name, email, password }) {
     dispatch(asyncRegisterUser({ name, email, password }))
       .then(() => {
-        navigate('/');
-      }).catch((errorMessage) => {
-        setRegisterError(errorMessage);
+        navigate('/signin');
+      }).catch((error) => {
+        setRegisterError(error.message);
       });
   }
 

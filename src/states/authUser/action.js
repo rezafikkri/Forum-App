@@ -1,5 +1,5 @@
-import { hideLoading, showLoading } from "react-redux-loading-bar";
-import api from "../../utils/api";
+import { hideLoading, showLoading } from 'react-redux-loading-bar';
+import api from '../../utils/api';
 
 const ActionType = {
   SET_AUTH_USER: 'SET_AUTH_USER',
@@ -31,8 +31,10 @@ function asyncSetAuthUser({ email, password }) {
       const authUser = await api.getOwnProfile();
 
       dispatch(setAuthUserActionCreator(authUser));
+
+      return authUser;
     } catch (error) {
-      return Promise.reject(error.message);
+      throw new Error(error.message);
     } finally {
       dispatch(hideLoading());
     }

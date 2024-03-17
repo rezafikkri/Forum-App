@@ -5,7 +5,7 @@ function Alert({ message, onClose, type = 'danger' }) {
 
   // capitalize first letter of the first word of the message
   const firstWord = replacedMessage.match(/[a-z]+/i)[0];
-  const firstWordCapitalize = firstWord[0].toUpperCase() + firstWord.slice(1);  
+  const firstWordCapitalize = firstWord[0].toUpperCase() + firstWord.slice(1);
 
   const firstWordIndex = replacedMessage.indexOf(firstWord) + firstWord.length;
   const newMessage = firstWordCapitalize + replacedMessage.slice(firstWordIndex);
@@ -19,7 +19,7 @@ function Alert({ message, onClose, type = 'danger' }) {
         data-bs-dismiss="alert"
         aria-label="Close"
         onClick={onClose}
-      ></button>
+      />
     </div>
   );
 }
@@ -27,6 +27,7 @@ function Alert({ message, onClose, type = 'danger' }) {
 Alert.propTypes = {
   message: PropTypes.string.isRequired,
   onClose: PropTypes.func.isRequired,
+  type: PropTypes.string,
 };
 
 export default Alert;

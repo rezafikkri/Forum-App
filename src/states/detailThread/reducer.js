@@ -33,7 +33,9 @@ function detailThreadReducer(detailThread = null, action = {}) {
             ? detailThread.upVotesBy.filter((userId) => userId !== action.payload.userId)
             : detailThread.upVotesBy,
         };
-      } else if (action.payload.target === 'down-vote') {
+      }
+
+      if (action.payload.target === 'down-vote') {
         return {
           ...detailThread,
           downVotesBy: detailThread.downVotesBy.includes(action.payload.userId)
@@ -46,7 +48,7 @@ function detailThreadReducer(detailThread = null, action = {}) {
     case ActionType.CREATE_COMMENT:
       return {
         ...detailThread,
-        comments: [ action.payload.comment, ...detailThread.comments ],
+        comments: [action.payload.comment, ...detailThread.comments],
       };
 
     case ActionType.UP_VOTE_COMMENT:
@@ -59,7 +61,7 @@ function detailThreadReducer(detailThread = null, action = {}) {
               upVotesBy: comment.upVotesBy.includes(action.payload.userId)
                 ? comment.upVotesBy
                 : [...comment.upVotesBy, action.payload.userId],
-            }
+            };
           }
           return comment;
         }),
@@ -74,7 +76,7 @@ function detailThreadReducer(detailThread = null, action = {}) {
               ...comment,
               downVotesBy: comment.downVotesBy.includes(action.payload.userId)
                 ? comment.downVotesBy
-                : [ ...comment.downVotesBy, action.payload.userId ],
+                : [...comment.downVotesBy, action.payload.userId],
             };
           }
           return comment;
@@ -85,7 +87,7 @@ function detailThreadReducer(detailThread = null, action = {}) {
       return {
         ...detailThread,
         comments: detailThread.comments.map((comment) => {
-          if (comment.id === action.payload.commentId) {  
+          if (comment.id === action.payload.commentId) {
             // check, if target up vote or down vote
             if (action.payload.target === 'up-vote') {
               return {
@@ -94,7 +96,9 @@ function detailThreadReducer(detailThread = null, action = {}) {
                   ? comment.upVotesBy.filter((userId) => userId !== action.payload.userId)
                   : comment.upVotesBy,
               };
-            } else if (action.payload.target === 'down-vote') {
+            }
+
+            if (action.payload.target === 'down-vote') {
               return {
                 ...comment,
                 downVotesBy: comment.downVotesBy.includes(action.payload.userId)

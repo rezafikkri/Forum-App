@@ -1,6 +1,6 @@
 import { useRef } from 'react';
-import QuillEditor from './QuillEditor';
 import PropTypes from 'prop-types';
+import QuillEditor from './QuillEditor';
 // styles
 import 'quill/dist/quill.snow.css';
 import '../styles/quill.custom.css';

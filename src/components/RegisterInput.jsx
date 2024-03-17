@@ -1,11 +1,11 @@
 import { Link } from 'react-router-dom';
-import useInput from '../hooks/useInput';
 import PropTypes from 'prop-types';
+import useInput from '../hooks/useInput';
 
 function RegisterInput({ onRegister }) {
-  const [name, handleNameChange, ] = useInput('');
-  const [email, handleEmailChange, ] = useInput('');
-  const [password, handlePasswordChange, ] = useInput('');
+  const [name, handleNameChange] = useInput('');
+  const [email, handleEmailChange] = useInput('');
+  const [password, handlePasswordChange] = useInput('');
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -54,13 +54,16 @@ function RegisterInput({ onRegister }) {
         </div>
         <button type="submit" className="btn btn-primary w-100">Register</button>
       </form>
-      <p className="text-center text-body-secondary mt-2">Already have an account? <Link to="/signin">Sign In</Link></p>
+      <p className="text-center text-body-secondary mt-2">
+        Already have an account?
+        <Link to="/signin">Sign In</Link>
+      </p>
     </>
   );
 }
 
 RegisterInput.propTypes = {
-  onRegister: PropTypes.func.isRequired
+  onRegister: PropTypes.func.isRequired,
 };
 
 export default RegisterInput;

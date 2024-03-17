@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
-import SanitizeHTML from './SanitizeHTML';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import { useSelector } from 'react-redux';
+import SanitizeHTML from './SanitizeHTML';
 import { isSignedInUserVoted } from '../utils';
 
 function ThreadCard({
@@ -51,26 +51,26 @@ function ThreadCard({
       </div>
       <div className="thread-footer d-flex fw-light gap-3 row-gap-1 flex-wrap">
         <div className="me-4">
-          <i className="bi bi-hash me-0"></i>
+          <i className="bi bi-hash me-0" />
           <span>{category}</span>
         </div>
 
-        <a
-          href="#"
+        <button
+          type="submit"
           onClick={handleUpVote}
           className={isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? 'active' : ''}
         >
-          <i className={`bi bi-arrow-up-circle${isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? '-fill' : ''}`}></i>
+          <i className={`bi bi-arrow-up-circle${isSignedInUserVoted({ authUser, votesBy: upVotesBy }) ? '-fill' : ''}`} />
           <span>{upVotesBy.length}</span>
-        </a>
-        <a
-          href="#"
+        </button>
+        <button
+          type="submit"
           onClick={handleDownVote}
           className={isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? 'active' : ''}
         >
-          <i className={`bi bi-arrow-down-circle${isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? '-fill' : ''}`}></i>
+          <i className={`bi bi-arrow-down-circle${isSignedInUserVoted({ authUser, votesBy: downVotesBy }) ? '-fill' : ''}`} />
           <span>{downVotesBy.length}</span>
-        </a>
+        </button>
       </div>
     </article>
   );

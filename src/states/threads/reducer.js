@@ -1,4 +1,4 @@
-import { ActionType } from "./action";
+import { ActionType } from './action';
 
 function threadsReducer(threads = [], action = {}) {
   switch (action.type) {
@@ -34,7 +34,7 @@ function threadsReducer(threads = [], action = {}) {
     case ActionType.NEUTRAL_VOTE_THREAD:
       return threads.map((thread) => {
         if (thread.id === action.payload.threadId) {
-          // check, if target up vote or down vote
+          // check, if target up vote or down vote?
           if (action.payload.target === 'up-vote') {
             return {
               ...thread,
@@ -42,7 +42,9 @@ function threadsReducer(threads = [], action = {}) {
                 ? thread.upVotesBy.filter((userId) => userId !== action.payload.userId)
                 : thread.upVotesBy,
             };
-          } else if (action.payload.target === 'down-vote') {
+          }
+
+          if (action.payload.target === 'down-vote') {
             return {
               ...thread,
               downVotesBy: thread.downVotesBy.includes(action.payload.userId)

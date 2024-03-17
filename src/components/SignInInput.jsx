@@ -1,6 +1,6 @@
-import useInput from '../hooks/useInput';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import useInput from '../hooks/useInput';
 
 function SignInInput({ onSignIn }) {
   const [email, handleEmailChange] = useInput('');
@@ -40,7 +40,10 @@ function SignInInput({ onSignIn }) {
         </div>
         <button type="submit" className="btn btn-primary w-100">Sign In</button>
       </form>
-      <p className="text-center text-body-secondary mt-2">Don't have an account? <Link to="/register">Register</Link></p>
+      <p className="text-center text-body-secondary mt-2">
+        Don&apos;t have an account?
+        <Link to="/register"> Register</Link>
+      </p>
     </>
   );
 }

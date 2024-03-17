@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom';
-import Navigation from './components/Navigation';
 import PropTypes from 'prop-types';
+import Navigation from './components/Navigation';
 
 function Layout({ onSignOut }) {
   return (

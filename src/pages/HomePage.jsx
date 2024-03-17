@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
-import ThreadsList from '../components/ThreadsList';
-import Alert from '../components/Alert';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import ThreadsList from '../components/ThreadsList';
+import Alert from '../components/Alert';
 import { asyncPopulateUsersThreadsAndCategories } from '../states/shared/action';
 import { asyncDownVoteThread, asyncNeutralVoteThread, asyncUpVoteThread } from '../states/threads/action';
 import { setCategoryActionCreator } from '../states/categories/action';
@@ -26,7 +26,7 @@ function HomePage() {
       setVoteThreadError('You must be signed in to upvote thread!');
       return false;
     }
-    
+
     // check, if signed in user not upvote yet
     if (!upVotesBy.includes(authUser.id)) {
       // check, if signed in user has downvoted
@@ -37,6 +37,8 @@ function HomePage() {
     } else {
       dispatch(asyncNeutralVoteThread({ threadId, target: 'up-vote' }));
     }
+
+    return true;
   }
 
   function handleDownVoteThread({ threadId, downVotesBy, upVotesBy }) {
@@ -45,7 +47,7 @@ function HomePage() {
       setVoteThreadError('You must be signed in to downvote thread!');
       return false;
     }
-    
+
     // check, if signed in user not downvote yet
     if (!downVotesBy.includes(authUser.id)) {
       // check, if signed in user has upvoted
@@ -56,6 +58,8 @@ function HomePage() {
     } else {
       dispatch(asyncNeutralVoteThread({ threadId, target: 'down-vote' }));
     }
+
+    return true;
   }
 
   function handleCategoryChange(e) {

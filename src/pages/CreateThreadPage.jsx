@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux';
-import ThreadInput from '../components/ThreadInput';
-import { asyncCreateThread } from '../states/threads/action';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ThreadInput from '../components/ThreadInput';
+import { asyncCreateThread } from '../states/threads/action';
 import Alert from '../components/Alert';
 
 function CreateThreadPage() {
@@ -30,7 +30,8 @@ function CreateThreadPage() {
         <header className="forum-header">
           <h1 className="fs-2 fw-bold text-body-emphasis me-auto mb-4">Create Thread</h1>
         </header>
-        {createThreadError && <Alert message={createThreadError} onClose={resetCreateThreadErrorState} />}
+        {createThreadError
+          && <Alert message={createThreadError} onClose={resetCreateThreadErrorState} />}
         <ThreadInput onCreateThread={handleCreateThread} />
       </div>
     </div>
