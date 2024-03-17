@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import LeaderboardItem, { leaderboardUserShape } from './LeaderboarItem';
+import LeaderboardItem, { leaderboardItemShape } from './LeaderboarItem';
 
 function LeaderboardsList({ leaderboards }) {
   return (
@@ -12,7 +12,7 @@ function LeaderboardsList({ leaderboards }) {
 }
 
 LeaderboardsList.propTypes = {
-  leaderboards: PropTypes.arrayOf(PropTypes.shape(leaderboardUserShape)).isRequired,
+  leaderboards: PropTypes.arrayOf(PropTypes.shape(leaderboardItemShape)).isRequired,
 };
 
 export default LeaderboardsList;

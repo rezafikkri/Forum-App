@@ -5,7 +5,7 @@ function LeaderboardItem({ user, score, rank }) {
   const authUser = useSelector((states) => states.authUser);
 
   function setActive() {
-    if (authUser.id === user.id) return 'border-primary-subtle';
+    if (authUser?.id === user.id) return 'border-primary-subtle';
     return '';
   }
 
@@ -34,16 +34,21 @@ function LeaderboardItem({ user, score, rank }) {
 }
 
 const leaderboardUserShape = {
+  id: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   avatar: PropTypes.string.isRequired,
 };
 
-LeaderboardItem.propTypes = {
+const leaderboardItemShape = {
   user: PropTypes.shape(leaderboardUserShape).isRequired,
   score: PropTypes.number.isRequired,
+};
+
+LeaderboardItem.propTypes = {
+  ...leaderboardItemShape,
   rank: PropTypes.number.isRequired,
 };
 
-export { leaderboardUserShape };
+export { leaderboardItemShape };
 
 export default LeaderboardItem;
