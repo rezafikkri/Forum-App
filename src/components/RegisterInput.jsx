@@ -56,7 +56,7 @@ function RegisterInput({ onRegister }) {
       </form>
       <p className="text-center text-body-secondary mt-2">
         Already have an account?
-        <Link to="/signin">Sign In</Link>
+        <Link to="/signin"> Sign In</Link>
       </p>
     </>
   );
