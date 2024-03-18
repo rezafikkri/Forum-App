@@ -15,8 +15,8 @@ function CreateThreadPage() {
       .then(() => {
         navigate('/');
       })
-      .catch((errorMessage) => {
-        setCreateThreadError(errorMessage);
+      .catch((error) => {
+        setCreateThreadError(error.message);
       });
   }
 
